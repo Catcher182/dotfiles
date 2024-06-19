@@ -1,0 +1,38 @@
+headerbar,
+headerbar:backdrop {
+  background-color: #ffffff;
+}
+
+headerbar button.flat:backdrop,
+headerbar label:backdrop selection.flat,
+label:backdrop headerbar selection.flat,
+headerbar label:disabled selection.flat:backdrop,
+label:disabled headerbar selection.flat:backdrop,
+headerbar button:disabled:backdrop {
+  border-color: @borders_breeze;
+}
+
+headerbar .linked button:disabled {
+  border-color: @borders_breeze;
+}
+
+.path-bar button:checked {
+  border-color: @theme_button_decoration_hover_breeze;
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.125);
+}
+.path-bar button {
+  margin-right: 2px;
+}
+
+notebook > header.top > tabs > tab.reorderable-page {
+  margin: 2px;
+  padding: 5px;
+  border-width: 0px 0px 2px 0px;
+  border-color: transparent;
+  box-shadow: none;
+}
+notebook > header.top > tabs > tab.reorderable-page:hover,
+notebook > header.top > tabs > tab.reorderable-page:checked {
+  border-bottom: 2px @theme_selected_bg_color solid;
+  box-shadow: none;
+}

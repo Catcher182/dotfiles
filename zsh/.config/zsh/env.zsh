@@ -1,0 +1,24 @@
+export GTK_USE_PORTAL=1
+export PATH="$HOME/.local/bin:$PATH"
+export EDITOR=nvim
+
+
+export _JAVA_AWT_WM_NONREPARENTING=1
+
+eval "$(zoxide init zsh)"
+eval "$(fnm env --use-on-cd)"
+
+
+
+
+# Import colorscheme from 'wal' asynchronously
+# &   # Run the process in the background.
+# ( ) # Hide shell job control messages.
+# Not supported in the "fish" shell.
+(cat ~/.cache/wal/sequences &)
+
+# Alternative (blocks terminal for 0-3ms)
+# cat ~/.cache/wal/sequences
+
+# To add support for TTYs this line can be optionally added.
+source ~/.cache/wal/colors-tty.sh

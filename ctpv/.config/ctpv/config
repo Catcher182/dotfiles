@@ -1,0 +1,19 @@
+preview lsarzip .zip {{
+    lsar "$f"
+}}
+
+
+preview docpandoc .doc {{
+    pandoc -s -t markdown "$f" | tee
+}}
+
+preview docxpandoc .docx {{
+    pandoc -s -t markdown "$f" | tee
+}}
+
+# set chafasixel
+
+preview any_image image/* {{
+    # this one applies to all text files
+    chafa -f sixel --animate off --polite on "$f" -s "${w}x${h}"
+}}

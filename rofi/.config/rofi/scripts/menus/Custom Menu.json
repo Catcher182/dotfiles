@@ -1,0 +1,34 @@
+[
+  {
+    "name": "journalctl -xeaf",
+    "command": "wezterm -e bash -c 'journalctl -xeaf'"
+  },
+  {
+    "name": "udevadm monitor",
+    "command": "wezterm -e bash -c 'udevadm monitor --kernel --udev'"
+  },
+  {
+    "name": "dmesg --ctime -w",
+    "command": "wezterm -e bash -c 'dmesg --ctime -w'"
+  },
+  {
+    "name": "fastfetch",
+    "command": "wezterm -e bash -c 'fastfetch;read'"
+  },
+  {
+    "name": "edit /etc/fstab",
+    "command": "subl3 /etc/fstab"
+  },
+  {
+    "name": "edit /usr/share/applications",
+    "command": "code /usr/share/applications"
+  },
+  {
+    "name": "edit ~/.config/rofi",
+    "command": "code ~/.config/rofi"
+  },
+  {
+    "name": "open /usr/share/applications",
+    "command": "dolphin /usr/share/applications"
+  }
+]

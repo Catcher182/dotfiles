@@ -1,0 +1,426 @@
+{
+    "layer": "top",
+
+    "position": "top",
+    "height": 26,
+
+    "modules-left": [
+        "custom/spaceleft",
+        "hyprland/submap",
+        "hyprland/workspaces",
+        "mpd",
+        "mpris",
+        "wlr/taskbar",
+        "custom/spaceright",
+        "hyprland/window",
+    ],
+    "modules-center": [
+    ],
+    "modules-right": [
+        //"wlr/taskbar",
+        "group/myright",
+        //"clock",
+        //"tray",
+        "group/myrightend",
+    ],
+
+
+    "group/myright": {
+        "orientation": "inherit",
+        "modules": [
+            //"temperature",
+            "group/hardware",
+            // "backlight",
+            // "pulseaudio",
+            "group/mypulseaudio",
+            "group/mybacklight",
+            "bluetooth",
+            "network",
+            //"idle_inhibitor",
+            //"custom/notification",
+            "group/mybattery",
+            "clock",
+        ]
+    },
+
+    "group/myrightend": {
+        "orientation": "inherit",
+        "modules": [
+            "tray",
+            "idle_inhibitor",
+            "custom/notification",
+        ]
+    },
+
+    "group/hardware": {
+        "orientation": "inherit",
+        "drawer": {
+            "transition-duration": 500,
+            "children-class": "drawer-child",
+            "transition-left-to-right": false,
+        },
+        "modules": [
+            "memory",
+            "disk",
+            "custom/udisks",
+            "cpu",
+        ]
+    },
+
+    "group/mypulseaudio": {
+        "orientation": "inherit",
+        "drawer": {
+            "transition-duration": 300,
+            "children-class": "drawer-child",
+            "transition-left-to-right": false,
+        },
+        "modules": [
+            "backlight",
+            "backlight/slider",
+        ]
+    },
+
+    "group/mybattery": {
+        "orientation": "inherit",
+        "drawer": {
+            "transition-duration": 300,
+            "children-class": "drawer-child",
+            "transition-left-to-right": false,
+        },
+        "modules": [
+            "battery",
+            "power-profiles-daemon",
+        ]
+    },
+
+    "group/mybacklight": {
+        "orientation": "inherit",
+        "drawer": {
+            "transition-duration": 300,
+            "children-class": "drawer-child",
+            "transition-left-to-right": false,
+        },
+        "modules": [
+            "pulseaudio",
+            "pulseaudio/slider",
+        ]
+    },
+
+
+
+    "hyprland/window":{
+        //"format": "-> {}",
+        //"separate-outputs": true,
+    },
+
+    "hyprland/workspaces": {
+        "format": "{icon}",
+        "format-icons": {
+            "1":"1",
+            "2":"2",
+            "3":"3",
+            "4":"4",
+            "5":"5",
+            "6":"6",
+            "7":"7",
+            "8":"8",
+            "9":"9",
+            "10":"0",
+            "OVERVIEW":" Overview ",
+            //"active": "+",
+            "default": "0",
+            "special":" Special ",
+        },
+        //"persistent-workspaces": {},
+        "show-special":true,
+        "on-scroll-up": "hyprctl dispatch workspace e+1",
+        "on-scroll-down": "hyprctl dispatch workspace e-1"
+    },
+
+    "wlr/taskbar": {
+        "format": "{icon}",
+        //"format": "{name}",
+        "icon-size": 18,
+        "icon-theme": "Papirus",
+        "tooltip-format": "{title}",
+        "all-outputs":false,
+        "on-click": "activate",
+        "on-click-right": "close",
+        // "on-click-right": "minimize",
+        // "on-click-right": "minimize-raise",
+        "app_ids-mapping": {
+          "firefoxdeveloperedition": "firefox-developer-edition",
+          "wezterm-float": "org.wezfurlong.wezterm",
+        },
+        "rewrite": {
+            "Firefox Web Browser": "Firefox",
+            "Foot Server": "Terminal",
+        }
+    },
+
+    "custom/spaceright":{
+        "format": "",
+        "on-click": "hyprctl dispatch overview:toggle",
+        "on-click-right": "rofi -show window",
+        "tooltip":false,
+    },
+
+    "custom/spaceleft":{
+        "format": "Arch",
+        "on-click": "rofi -show drun -theme ~/.config/rofi/themes/launcher.rasi",
+        "on-click-right": "rofi -show window",
+        "tooltip":false,
+    },
+    
+    "hyprland/submap": {
+        "format": "{}",
+        // "tooltip": false
+    },
+
+    "custom/close":{
+        "format":"",
+        "on-click": "hyprctl dispatch killactive 1",
+        "tooltip":false ,
+    },
+
+    "disk": {
+        "interval": 30,
+        "format": "/:{free}",
+        "path": "/",
+        "on-click":"dolphin"
+    },
+
+    "battery": {
+        "interval": 60,
+        "states": {
+            "warning": 30,
+            "critical": 15
+        },
+        // Connected to AC
+        "format": "ϟ:{capacity}%", // Icon: bolt
+
+        // Not connected to AC
+        "format-discharging": "Battery:{capacity}%",
+        // "tooltip": false
+    },
+
+    "power-profiles-daemon": {
+      "format": "{icon} {profile}",
+      "tooltip-format": "Power profile: {profile}\nDriver: {driver}",
+      "tooltip": true,
+      "format-icons": {
+        "default": "",
+        "performance": "",
+        "balanced": "",
+        "power-saver": ""
+      }
+    },
+
+    "clock":{
+        "format": "{:%H:%M}",
+        "format-alt": "{:%A, %B %d, %Y (%R)}",
+        "tooltip-format": "<span size='9pt' font='JetBrains Mono'>{calendar}</span>\n",
+        "calendar": {
+            "mode"          : "month",
+            "mode-mon-col"  : 3,
+            "weeks-pos"     : "left",
+            "on-scroll"     : 1,
+            "format": {
+                "months":     "<span color='#ffdd33'><b>{}</b></span>",
+                "days":       "<span><b>{}</b></span>",
+                // "days":       "<span color='#ffdd33'><b>{}</b></span>",
+                "weeks":      "<span color='#99fb2d'><b>W{}</b></span>",
+                "weekdays":   "<span color='#ffcc66'><b></b></span>",
+                "today":      "<span color='#99fb2d'><b><u>{}</u></b></span>"
+            }
+        },
+        "actions":  {
+            "on-scroll-up": "shift_down",
+            "on-scroll-down": "shift_up"
+        },
+        "on-click-right": "thunderbird &",
+    },
+
+
+    "cpu": {
+        "interval": 5,
+        "format": "CPU:{usage}%",
+        "states": {
+          "warning": 70,
+          "critical": 90
+        },
+        "on-click":"wezterm start --class 'btop' -e btop",
+    },
+
+    "memory": {
+        "interval": 5,
+        "format": "RAM:{}%",
+        "states": {
+            "warning": 70,
+            "critical": 90
+        },
+        "on-click":"wezterm start --class 'btop' -e btop",
+    },
+
+    "network": {
+        "interval": 5,
+        "on-click": "networkmanager_dmenu",
+        "format-wifi": "{essid}",
+        "format-ethernet": "{ifname}: {ipaddr}/{cidr}",
+        "format-disconnected": "Disconnected",
+        "tooltip-format": "{ifname}: {ipaddr}"
+    },
+
+
+    "pulseaudio": {
+        "scroll-step": 1,
+        "format": "{format_source}|{icon}:{volume}%",
+        "format-bluetooth": "{format_source}|{icon}-ᛒ:{volume}%",
+        "format-bluetooth-muted": "{format_source}|{icon}-ᛒ",
+        "format-muted": "{format_source}|Vol",
+        "format-source": "Mic:{volume}%",
+        "format-source-muted": "Mic",
+        "format-icons": {
+            "headphone": "Vol-H",
+            "hands-free": "Vol-HF",
+            "headset": "Vol-HS",
+            "phone": "Vol-P",
+            "portable": "Vol-P",
+            "car": "Vol-C",
+            "default": "Vol"
+        },
+        "on-click-right": "hdrop -f -p r -g -403 pavucontrol",
+        // "on-click-right": "pavucontrol",
+        "on-click": "pamixer -t",
+    },
+
+    "pulseaudio/slider": {
+        "min": 0,
+        "max": 100,
+        "orientation": "horizontal"
+    },
+
+    "temperature": {
+      "critical-threshold": 80,
+      "interval": 5,
+      "format": "{temperatureC}°C",
+      "tooltip": true
+    },
+
+    "backlight": {
+        // "device": "acpi_video1",
+        "format": "Light:{percent}%",
+        // "tooltip": false,
+    },
+    "backlight/slider": {
+        "min": 0,
+        "max": 100,
+        "orientation": "horizontal",
+        // "device": "intel_backlight"
+    },
+
+    "tray": {
+        "icon-size": 12,
+        "spacing": 6,
+    },
+        
+    "bluetooth": {
+      "on-click":"rofi-bluetooth",
+      "on-click-right":"hdrop -f -p r -g -403 blueman-manager",
+      // "on-click-right":"blueman-manager",
+      //"format": "ᛒ:{status}",
+      // "format": ":{status}",
+      "format": "BT:{status}",
+      "format-connected": "BT:{device_alias}",
+      "format-connected-battery": "BT:{device_alias} {device_battery_percentage}%",
+      // "format-device-preference": [ "device1", "device2" ], // preference list deciding the displayed device
+      "tooltip-format": "{controller_alias}\t{controller_address}\n\n{num_connections} connected",
+      "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}",
+      "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
+      "tooltip-format-enumerate-connected-battery": "{device_alias}\t{device_address}\t{device_battery_percentage}%"
+    },
+
+    "idle_inhibitor": {
+        "format": "{icon}",
+        "format-icons": {
+            "activated": "󰌿",
+            "deactivated": "󰌾"
+            // "activated": "🔓",
+            // "deactivated": "🔒"
+            // "activated": "A",
+            // "deactivated": "D"
+        },
+        "on-click-right" : "pkill rofi || ~/.config/rofi/scripts/powermenu.sh"
+    },
+
+    "mpd": {
+        "format": "♬{stateIcon} {title}",
+        "state-icons": {
+            "paused": "",
+            "playing": "▶"
+        },
+        "format-stopped": "",
+        "interval": 10,
+        "max-length": 25,
+        "on-click": "mpc --quiet toggle",
+        "on-click-middle": "wezterm start --class ncmpcpp ncmpcpp",
+        "on-click-right": "mpc update; mpc ls | mpc add",
+        "on-scroll-down": "mpc --quiet next",
+        "on-scroll-up": "mpc --quiet prev",
+        "smooth-scrolling-threshold": 5,
+        //"tooltip-format": "MPD (connected)",
+        "tooltip-format": "{title} - {artist} ({elapsedTime:%M:%S}/{totalTime:%H:%M:%S})",
+        "tooltip-format-disconnected": "MPD (disconnected)"
+    },
+    "mpris": {
+        "format": "{player_icon} {dynamic}",
+        "format-paused": "{status_icon} {dynamic}",
+        "player-icons": {
+            "default": "▶",
+        },
+        "status-icons": {
+            "paused": ""
+        },
+        "max-length": 15,
+        // "ignored-players": ["firefox"]
+    },
+
+    "custom/notification": {
+        "tooltip": false,
+        "format": "{icon}",
+        "format-icons": {
+            "notification": "󱅫",
+            "none": "󰂚",
+            "dnd-notification": "󱏩",
+            "dnd-none": "󰂛",
+            "inhibited-notification": "󱅫",
+            "inhibited-none": "󰂚",
+            "dnd-inhibited-notification": "󱏩",
+            "dnd-inhibited-none": "󰂛"
+
+            // "notification": "🔔<span foreground='red'><sup>⦁</sup></span>",
+            // "none": "🔔",
+            // "dnd-notification": "🔕<span foreground='red'><sup>⦁</sup></span>",
+            // "dnd-none": "🔕",
+            // "inhibited-notification": "🔔<span foreground='red'><sup>⦁</sup></span>",
+            // "inhibited-none": "🔔",
+            // "dnd-inhibited-notification": "🔕<span foreground='red'><sup>⦁</sup></span>",
+            // "dnd-inhibited-none": "🔕"
+        },
+        "return-type": "json",
+        "exec-if": "which swaync-client",
+        "exec": "swaync-client -swb",
+        "on-click": "swaync-client -t -sw",
+        "on-click-right": "swaync-client -d -sw",
+        "escape": true
+    },
+
+    "custom/udisks": {
+        "exec": "~/.config/rofi/scripts/rofi-udisks.sh check",
+        "on-click": "~/.config/rofi/scripts/rofi-udisks.sh mount",
+        "on-click-right": "~/.config/rofi/scripts/rofi-udisks.sh umount",
+        "on-click-middle": "~/.config/rofi/scripts/rofi-udisks.sh umountAll",
+        "restart-interval": 1,
+    },
+
+}

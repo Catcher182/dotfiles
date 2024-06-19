@@ -1,0 +1,329 @@
+#root.root {
+  --nav-hidden-btn-border-radius: 4px;
+}
+#root.root {
+  --nav-hidden-panels-popup-margin: 3px;
+}
+#root.root {
+  --nav-btn-border-radius: 2px;
+}
+#root {
+  /* Tab and PinnedTab height adjustment */
+  --tabs-height: 33px;
+  --tabs-pinned-height: var(--tabs-height);
+
+  /*
+		--s-toolbar-bg: var(--s-frame-bg);
+		--s-act-el-border:var(--tabs-activated-bg);  
+	*/
+
+  --s-act-el-border: var(--tabs-activated-bg);
+  /*--tabs-activated-bg:var(--s-frame-bg);*/
+}
+
+#root[data-frame-color-scheme="dark"] {
+  --frame-bg: var(--s-toolbar-bg, #282828);
+}
+#root[data-frame-color-scheme="light"] {
+  --frame-bg: var(--s-toolbar-bg, #eaeaea);
+}
+
+#root[data-act-el-color-scheme="dark"] {
+  --active-el-bg: var(--s-frame-bg, rgba(255, 255, 255, 0.141));
+}
+#root[data-act-el-color-scheme="light"] {
+  --active-el-bg: var(--s-frame-bg, #fff);
+}
+
+#root .Tab {
+  --tabs-indent: 8px;
+}
+
+/* TABS */
+
+.Tab .lvl-wrapper:after {
+  display: none;
+}
+
+.Tab {
+  margin: auto;
+  margin-left: 6px;
+  margin-right: 6px;
+  margin-top: 0.02px;
+  margin-bottom: 0.02px;
+
+  width: 95%;
+  border-radius: 3px;
+}
+
+.Tab .body {
+  height: 90%;
+}
+.Tab .body:hover {
+  height: 90%;
+  box-shadow: var(--tabs-activated-shadow);
+}
+
+.Tab .close:hover {
+  /* Styling the tab close button */
+  border-radius: 3px;
+  opacity: 80%;
+}
+
+.Tab .close > svg:hover {
+  border-radius: 3px;
+  background: var(--s-frame-bg) !important;
+  /* background: var(--warn) !important; */
+  opacity: 80%;
+}
+
+.Tab .title {
+  overflow: hidden !important;
+  padding-bottom: 2px;
+}
+
+.TabsPanel .new-tab-btn:hover {
+  margin-right: 5px;
+  margin-left: 4px;
+  box-shadow: var(--tabs-activated-shadow);
+}
+
+/* PINNED TABS */
+
+.PinnedDock {
+  background-color: var(--bg) !important;
+}
+
+.PinnedTab {
+  margin: 5px 0px 4px 6px;
+  border-radius: 3px;
+}
+
+/* NAV BAR */
+
+.NavigationBar {
+  /*height: 40px !important;*/
+  padding: 4.5px 6px 4.5px 6px !important;
+  /*background-color: # !important;*/
+  margin-bottom: 5px;
+
+  border-bottom: var(--tabs-activated-bg) solid 2px !important;
+
+  /*background-color: red !important;*/
+}
+
+.NavigationBar .nav-item[data-active="true"] {
+  box-shadow: none !important;
+}
+.NavigationBar .nav-item {
+  border-radius: 3px;
+}
+
+.NavigationBar .panel-btn:hover {
+  border-radius: 3px !important;
+  background-color: var(--tabs-bg-hover) !important;
+}
+
+.NavigationBar .panel-btn[data-active="true"] {
+  border-radius: 3px !important;
+  background-color: var(--bg) !important;
+}
+
+.NavigationBar .panel-btn[data-active="true"]:hover {
+  border-radius: 3px !important;
+  background-color: var(--tabs-bg-hover) !important;
+}
+
+.NavigationBar .panel-btn > svg,
+.NavigationBar .panel-btn > img {
+  fill: var(--panel-btn) !important;
+}
+
+#root[data-pinned-tabs-position="panel"] .PinnedTabsBar {
+  padding-left: 6px;
+  padding-right: 6px;
+}
+
+.SearchBar {
+  margin: 2px 4.5px;
+}
+
+.NavigationBar.-top {
+  width: 260px;
+}
+
+.top-horizontal-box {
+  width: 260px;
+}
+
+.BottomBar {
+  padding: 4.5px 5px 2px 5px !important;
+}
+
+/* SIDEBAR HACK PATCHES */
+
+@media (max-width: 50px) {
+  /* Fix to tab tree identation when minimised */
+  #root:not(:hover) .Tab {
+    --tabs-indent: -68px;
+  }
+
+  .Tab[data-lvl] > div.lvl-wrapper {
+    right: -2px;
+  }
+
+  .Tab {
+    max-width: 30px;
+  }
+
+  .Tab .fav {
+    z-index: 1;
+  }
+
+  .Tab .audio {
+    z-index: 1;
+    margin-left: -12px;
+    height: 26px;
+  }
+
+  .Tab .title {
+    display: none;
+  }
+
+  .PinnedTab {
+    margin-left: 5px;
+  }
+
+  .NavigationBar .settings-btn {
+    display: none;
+  }
+
+  .SearchBar {
+    display: none;
+  }
+
+  .NavigationBar .nav-item[data-active="false"] {
+    display: none;
+  }
+
+  .NavigationBar .nav-item[data-class="space"] {
+    display: none;
+  }
+
+  .NavigationBar #add_tp {
+    display: none;
+  }
+
+  .NavigationBar #search {
+    display: none;
+  }
+
+  .NavigationBar #settings {
+    display: none;
+  }
+
+  .NavigationBar #create_snapshot {
+    display: none;
+  }
+
+  .NavigationBar #hidden_panels_btn {
+    display: none;
+  }
+
+  .Notifications {
+    display: none;
+  }
+
+  .NavigationBar.-top {
+    width: 260px;
+  }
+
+  .top-horizontal-box {
+    width: 260px;
+  }
+
+  .SubPanel .sub-panel {
+    display: none;
+  }
+
+  .NavigationBar .nav-item[data-active="true"] {
+    background-color: #00000000;
+  }
+
+  .Sidebar .tool-btn {
+    padding-left: 1.5px;
+  }
+}
+
+@media (max-width: 250px) {
+  .SubPanel .sub-panel {
+    display: none;
+  }
+}
+
+/* OPTIONAL */
+
+/* Disable these two snippets below to make pinned tabs wrap when minimised */
+/*.PinnedDock {
+	flex-wrap: nowrap !important;
+}
+
+.PinnedTab {
+	overflow: hidden !important;
+	min-width: var(--tabs-pinned-width) !important;
+}*/
+
+/* Optional patch for better tab notifications on pinned tabs */
+
+.PinnedTab[data-audible] .fav > img,
+.PinnedTab[data-muted] .fav > img,
+.PinnedTab[data-loading] .fav > img {
+  mask: none;
+}
+
+.PinnedTab .fav > img {
+  mask: none;
+}
+
+.PinnedTab[data-updated="true"] .fav > img {
+  mask: radial-gradient(
+    circle at calc(100% - 2px) calc(100% - 2px),
+    rgba(0, 0, 0, 0.141),
+    rgba(0, 0, 0, 0.141) 4px,
+    #000 5px,
+    #000
+  );
+}
+
+.PinnedTab .audio-badge {
+  top: 5px;
+}
+
+.PinnedTab .update-badge {
+  opacity: 0;
+}
+
+.PinnedTab[data-updated="true"] .update-badge {
+  opacity: 100;
+}
+
+@media (prefers-color-scheme: dark) {
+  #root {
+    /* Dark Theme base settings */
+    --bg: #1a1b26 !important;
+    --tabs-fg: #d4d4d4 !important;
+    --tabs-bg-hover: #3b3948 !important;
+    --tabs-activated-bg: #5b5b66 !important;
+    --nav-btn-activated-bg: #1f222f !important;
+    --panel-btn: #f2f2f2 !important;
+    --warn: #8c4351 !important;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  #root {
+    /* Light Theme base settings */
+    --bg: #f1f5f9 !important;
+    --warn: #fca5a5 !important;
+  }
+}

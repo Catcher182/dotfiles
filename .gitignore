@@ -1,0 +1,8 @@
+*.log
+*.tmp
+*.cache
+*.diff
+.vscode
+.history
+.idea
+.fleet

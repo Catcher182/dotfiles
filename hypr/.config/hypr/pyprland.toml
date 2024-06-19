@@ -1,0 +1,19 @@
+[pyprland]
+plugins = [
+  "expose",
+  "fetch_client_menu",
+  "magnify",
+]
+
+
+[expose]
+include_special = false
+
+[fetch_client_menu]
+separator = ":"
+engine = "rofi"
+parameters = "-dmenu -matching fuzzy -i -p 'Fetch'"
+
+[magnify]
+duration = 0
+

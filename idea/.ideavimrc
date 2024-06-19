@@ -1,0 +1,215 @@
+set scrolloff=5
+set incsearch
+set clipboard+=unnamed
+set ignorecase
+set scrolloff=30
+set history=200
+
+set number
+set relativenumber
+
+set incsearch
+set hlsearch
+"===set which-key
+set notimeout
+
+set NERDTree
+set easymotion
+set surround
+set multiple-cursors
+set which-key
+
+
+
+let mapleader=" "
+nnoremap H ^
+nnoremap L $
+nnoremap zz za
+nnoremap <Leader>w- :split<CR>
+nnoremap <Leader>- :split<CR>
+nnoremap <Leader>w\| :vsplit<CR>
+nnoremap <Leader>\| :vsplit<CR>
+
+nnoremap <Leader>zw :action ZoomCurrentWindow<CR>
+
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+
+" Increase Window Height
+nnoremap <C-Up> :action DecrementWindowHeight<CR>
+" Decrease Window Height
+nnoremap <C-Down> :action IncrementWindowHeight<CR>
+" Increase Window Width
+nnoremap <C-Left> :action IncreaseColumnWidth<CR>
+" Decrease Window Width
+nnoremap <C-Right> :action DecreaseColumnWidth<CR>
+
+nnoremap [b :action NextWindow<CR>
+nnoremap ]b :action PreviousWindow<CR>
+nnoremap <Leader>bb :action NextWindow<CR>
+
+nnoremap <leader>fn :action NewFile<CR>
+nnoremap <Leader>xq :action ShowIntentionActions<CR>
+nnoremap <Leader>xQ :action QuickFixes<CR>
+nnoremap <Leader>cf :action ReformatCode<CR>
+
+
+nnoremap <Leader>]e :action GotoNextError<CR>
+nnoremap <Leader>[e :action GotoPreviousError<CR>
+nnoremap ]e :action GotoNextError<CR>
+nnoremap [e :action GotoPreviousError<CR>
+
+nnoremap <Leader>uw :action EditorToggleUseSoftWraps<CR>
+
+nnoremap <Leader>qq :qa
+nnoremap <Leader><Tab>] :tabnext<CR>
+nnoremap <Leader><Tab>[ :tabprev<CR>
+nnoremap <Leader><Tab><Tab> :tabnext<CR>
+nnoremap <Leader><Tab>d :tabclose<CR>
+
+nnoremap gcc :action CommentByLineComment<CR>
+vmap gcc :action CommentByLineComment<CR>
+vmap gC :action CommentByBlockComment<CR>
+
+nnoremap gd :action GotoDeclaration<CR>
+nnoremap gr :action FindUsages<CR>
+nnoremap gD :action GotoDeclaration<CR>
+nnoremap gI :action GotoImplementation<CR>
+nnoremap gy :action GotoTypeDeclaration<CR>
+"nnoremap K :action ShowDescription<CR>
+nnoremap gK :action ParameterInfo<CR>
+nnoremap <Leader>gd :action GotoDeclaration<CR>
+nnoremap <Leader>gD :action GotoDeclaration<CR>
+nnoremap <Leader>gI :action GotoImplementation<CR>
+nnoremap <Leader>gy :action GotoTypeDeclaration<CR>
+nnoremap <Leader>cc :action ShowHoverInfo<CR>
+nnoremap <Leader>ca :action GotoAction<CR>
+nnoremap <Leader>cA :action EditSource<CR>
+nnoremap <Leader>crn :action RenameElement<CR>
+nnoremap <leader>cm :action MethodHierarchy <CR>
+nnoremap <leader>cp :action ShowPopupMenu <CR>
+vnoremap <leader>cp :action ShowPopupMenu <CR>
+nnoremap <leader>crm :action RefactoringMenu <CR>
+vnoremap <leader>crm :action RefactoringMenu <CR>
+
+nnoremap <Leader>e :NERDTreeToggle<CR>
+nnoremap <Leader>ge :action ActivateVersionControlToolWindow<CR>
+nnoremap <Leader>fr :action RecentFiles<CR>
+nnoremap <Leader>fb :action SwitcherAndRecentFiles<CR>
+nnoremap <Leader>st :action ActivateTODOToolWindow<CR>
+nnoremap [[ :action EditorSearchSession.PrevOccurrence<CR>
+nnoremap ]] :action SelectNextOccurrence<CR>
+
+nnoremap <Leader>dd :action Debug<CR>
+nnoremap <Leader>dc :action Resume<CR>
+nnoremap <Leader>dC :action RunToCursor<CR>
+nnoremap <Leader>di :action StepInto<CR>
+nnoremap <Leader>do :action StepOut<CR>
+nnoremap <Leader>dO :action StepOver<CR>
+nnoremap <Leader>dp :action Pause<CR>
+nnoremap <Leader>db :action ToggleLineBreakpoint<CR>
+nnoremap <Leader>dB :action AddConditionalBreakpoint<CR>
+nnoremap <Leader>dr :action ActivateDebugToolWindow<CR>
+nnoremap <Leader>ds :action Stop<CR>
+
+nnoremap <Leader>rd ggdG
+nnoremap <Leader>rc ggcG
+nnoremap <Leader>yy ggyG
+nnoremap <Leader>vv ggVG
+
+nnoremap <leader>fa :action SearchEverywhere<CR>
+nnoremap <leader>ff :action GotoFile<CR>
+nnoremap <leader>fc :action GotoClass<CR>
+nnoremap <leader>fm :action GotoSymbol<CR>
+nnoremap <leader>co :action OverrideMethods<CR>
+nnoremap <leader>ci :action ImplementMethods<CR>
+nnoremap <leader>gn :action Generate<CR>
+nnoremap <leader>nn :action NavigateInFileGroup<CR>
+nnoremap <leader>fp :action FindInPath<CR>
+nnoremap <leader>fj :action JumpToLastChange<CR>
+nnoremap <leader>fs :action GotoSuperMethod<CR>
+nnoremap <leader>fu :action ShowUsages<CR>
+nnoremap <leader>ft :action GotoTest<CR>
+
+
+nnoremap <leader>cem :action ExtractMethod<CR>
+nnoremap <leader>ch :action CallHierarchy<CR>
+nnoremap <leader>ruc :action RunClass<CR>
+nnoremap <leader>run :action RunAnything<CR>
+" e: Extract
+" extract method/function 将选中的代码片段提取为一个独立的方法(Ctrl + Alt + M)
+vmap <leader>cem :action ExtractMethod<CR>
+" extract constant （引入常量）的重构操作:将选中的代码片段抽取为一个常量，并自动替换选中的代码片段为新的常量引用(Ctrl + Alt + C)
+vmap <leader>cec :action IntroduceConstant<CR>
+" extract field （引入字段）的重构操作:将选中的代码片段转化为一个新的字段，并自动将选中的代码片段替换为对该字段的引用(Ctrl + Alt + F)
+vmap <leader>cef :action IntroduceField<CR>
+" extract variable （引入变量）的重构操作:将选中的代码片段抽取为一个新的变量，并自动替换选中的代码片段为新的变量引用(Ctrl + Alt + V)
+vmap <leader>cev :action IntroduceVariable<CR>
+
+nnoremap <A-K> :action MoveLineUp<CR>
+nnoremap <A-J> :action MoveLineDown<CR>
+nnoremap <C-Q> :action QuickJavaDoc<CR>
+nnoremap <C-P> :action ParameterInfo<CR>
+
+let g:WhichKeyDesc_GitOrGenerate = "<leader>g Goto&构造"
+"执行版本控制（VCS）的回滚操作，将修改的代码还原到之前的版本
+let g:WhichKeyDesc_GitOrGenerate_RollbackHunk = "<leader>gr git回滚"
+nmap <leader>gr :action Vcs.RollbackChangedLines<CR>
+"生成构造器
+let g:WhichKeyDesc_GitOrGenerate_GenerateConstructor = "<leader>gc 生成构造器"
+nmap <leader>gc :action GenerateConstructor<CR>
+"生成getter
+let g:WhichKeyDesc_GitOrGenerate_GenerateGetter = "<leader>gg 生成getter"
+nmap <leader>gg :action GenerateGetter<CR>
+"生成setter
+let g:WhichKeyDesc_GitOrGenerate_GenerateSetter = "<leader>gs 生成setter"
+nmap <leader>gs :action GenerateSetter<CR>
+"生成setter和getter
+let g:WhichKeyDesc_GitOrGenerate_GenerateGetterAndSetter = "<leader>ga 生成setter和getter"
+nmap <leader>ga :action GenerateGetterAndSetter<CR>
+"生成 equals() 和 hashcode() 的重写方法
+let g:WhichKeyDesc_GitOrGenerate_GenerateEquals = "<leader>gq 生成equals和hashcode的重写"
+nmap <leader>gq :action GenerateEquals<CR>
+"生成toString
+let g:WhichKeyDesc_GitOrGenerate_GenerateToString = "<leader>gt 生成toString"
+nmap <leader>gt :action Actions.ActionsPlugin.GenerateToString<CR>
+"diff 显示文件的版本控制历史(git)
+let g:WhichKeyDesc_DebugOrDelete_ShowTabbedFileHistory = "<leader>gh 显示文件的版本控制历史"
+nmap <leader>gh :action Vcs.ShowTabbedFileHistory<CR>
+
+
+
+"========== n ==========
+let g:WhichKeyDesc_NERDTreeOrNew = "<leader>n 目录树&新建"
+
+"取消搜索高亮显示(No Highlight)
+let g:WhichKeyDesc_NERDTreeOrNew_Highlight = "<leader>nh 取消搜索高亮"
+nmap <leader>nl :nohlsearch<CR>
+"在当前目录新建文件夹
+let g:WhichKeyDesc_NERDTreeOrNew_NewDir = "<leader>nd 新建文件夹"
+nmap <leader>nd :action NewDir<CR>
+"在当前目录新建类
+let g:WhichKeyDesc_NERDTreeOrNew_NewClass = "<leader>nc 新建.Class"
+nmap <leader>nc :action NewClass<CR>
+
+"--insert mode select
+inoremap <S-Left> :action EditorLeftWithSelection <CR>
+inoremap <S-Right> :action EditorRightWithSelection <CR>
+inoremap <S-Up> :action EditorUpWithSelection <CR>
+inoremap <S-Down> :action EditorDownWithSelection <CR>
+"-- expand selection
+vnoremap af :action EditorSelectWord <CR>
+vnoremap AF :action EditorUnSelectWord <CR>
+
+nnoremap <leader>mm :action ToggleBookmark <CR>
+nnoremap <leader>me :action EditBookmark <CR>
+
+
+
+
+
+
+
+
