@@ -7,11 +7,13 @@ local module = {}
 
 function module.apply_to_config(config)
 	config.font = wezterm.font_with_fallback({
-		{ family = "MonaspaceRadonVar", weight = 600 },
-		-- { family = "Muyao-Softbrush", weight = 500 },
+		-- { family = "MonaspaceRadonVar", weight = 600 },
+		{ family = "JetBrains Mono", weight = 500 },
+		-- { family = "Source Code Pro", weight = 500 },
 		-- { family = "LXGWWenKai-Regular", weight = 500 },
+		{ family = "Noto Sans CJK SC", weight = 500 },
 		-- { family = "Yozai", weight = 600 },
-		{ family = "XiaolaiMonoSC", weight = 500 },
+		-- { family = "XiaolaiMonoSC", weight = 500 },
 	})
 
 	config.font_size = 11

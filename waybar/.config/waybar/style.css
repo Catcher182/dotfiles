@@ -1,1 +1,350 @@
-@import "./style-top.css";
+@import "/home/dawn/.cache/wal/my-colors-waybar.css";
+
+@keyframes blink-warning {
+  70% {
+    color: white;
+  }
+
+  to {
+    color: white;
+    background-color: orange;
+  }
+}
+
+@keyframes blink-critical {
+  70% {
+    color: white;
+  }
+
+  to {
+    color: white;
+    background-color: red;
+  }
+}
+
+* {
+  border: none;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+}
+
+#waybar {
+  color: @color0;
+  background-color: transparent;
+  font-family: "sans-serif,monospace";
+  font-size: 14px;
+  font-weight: 500;
+}
+
+window#waybar > box {
+  margin: 0px 0px 0px 0px;
+  background-color: @color16;
+}
+
+/* left */
+
+#submap,
+#mpris,
+#mpd {
+  font-family: "LXGWNeoXiHei";
+  font-weight: bold;
+  min-width: 10px;
+  color: @color0;
+  padding-left: 6px;
+  padding-right: 6px;
+  margin: 3px 1px;
+  border-radius: 2px;
+  background-color: @color1;
+  /* background-color: transparent; */
+  /* box-shadow: inset 0px -12px 12px -6px @color1; */
+}
+
+#custom-spaceleft {
+  color: @color0;
+  background-color: transparent;
+  border-radius: 2px;
+  padding-left: 6px;
+  padding-right: 0px;
+  margin: 3px 1px 3px 0px;
+  font-weight: bold;
+}
+
+#custom-splitline {
+  margin: 3px 2px;
+  color: @color0;
+}
+
+#workspaces {
+  border-radius: 2px;
+  margin: 3px 1px;
+  padding: 0px 2px;
+  background-color: @color1;
+  /* box-shadow: inset 0px -12px 12px -6px @color1; */
+}
+#workspaces button {
+  min-width: 20px;
+  font-family: "monospace";
+  font-size: 13px;
+  font-weight: bold;
+  color: @color0;
+  border-radius: 2px;
+  margin: 2px 2px;
+}
+
+#workspaces button.active {
+  color: #fff;
+  box-shadow: inset 0px -12px 12px -6px @color8;
+}
+
+#workspaces button:hover {
+  background: @color1;
+  color: @color0;
+  box-shadow: inherit;
+  text-shadow: inherit;
+}
+
+#workspaces button.urgent {
+  background-color: @color8;
+  color: white;
+  box-shadow: inset 0px -16px 6px -12px red;
+}
+
+#workspaces button.visible {
+}
+
+#workspaces button.empty {
+}
+
+#workspaces button.persistent {
+  box-shadow: inset 0px -12px 12px -6px @color5;
+}
+
+#workspaces button.special {
+  box-shadow: inset 0px -12px 12px -6px @color3;
+}
+
+#taskbar {
+  border-radius: 2px;
+  margin: 3px 1px;
+  padding: 0px 2px;
+  background-color: @color1;
+}
+#taskbar button {
+  color: @color0;
+  border-radius: 2px;
+  border: 2px transparent solid;
+  background-color: transparent;
+}
+#taskbar button.active {
+  border-bottom: 2px @color8 solid;
+}
+
+#taskbar button.minimized {
+  border-bottom: 2px @color3 solid;
+}
+#taskbar button:hover {
+  border-bottom: 2px @color1 solid;
+}
+
+#window {
+  margin: 3px 1px;
+  padding-left: 6px;
+  padding-right: 6px;
+  font-weight: bold;
+  /* font-size: 13px; */
+  /* font-family: "LXGWNeoXiHei"; */
+  font-family: "monospace";
+  color: @color0;
+  border-radius: 2px;
+}
+window#waybar.fullscreen > box {
+  box-shadow: inset 0px -12px 12px -6px @color6;
+}
+
+/* right */
+
+#disk,
+#battery,
+#power-profiles-daemon,
+#cpu,
+#clock,
+#memory,
+#mode,
+#network,
+#backlight,
+#pulseaudio,
+#custom-notification,
+#idle_inhibitor,
+#tray,
+#custom-powermenu,
+#custom-udisks,
+#bluetooth,
+#temperature {
+  color: @color0;
+  padding-left: 3px;
+  padding-right: 3px;
+  margin: 3px 0px;
+  border-radius: 2px;
+}
+
+#myright {
+  color: @color0;
+  border-radius: 2px;
+  padding-left: 3px;
+  padding-right: 3px;
+  background-color: transparent;
+}
+
+#myrightend {
+  border-radius: 2px;
+  padding-left: 3px;
+  padding-right: 3px;
+  background-color: transparent;
+}
+
+#idle_inhibitor,
+#custom-notification {
+  font-size: 15px;
+}
+
+/* ============================== */
+
+#battery {
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+#battery.warning {
+  color: white;
+  box-shadow: inset 0px -16px 6px -12px orange;
+}
+
+#battery.critical {
+  color: white;
+  box-shadow: inset 0px -16px 6px -12px red;
+}
+
+#battery.warning.discharging {
+  animation-name: blink-warning;
+  animation-duration: 3s;
+}
+
+#battery.critical.discharging {
+  animation-name: blink-critical;
+  animation-duration: 2s;
+}
+
+#cpu.warning {
+  color: white;
+  box-shadow: inset 0px -16px 6px -12px orange;
+}
+
+#cpu.critical {
+  color: white;
+  box-shadow: inset 0px -16px 6px -12px red;
+}
+
+#memory {
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+#memory.warning {
+  color: white;
+  box-shadow: inset 0px -16px 6px -12px orange;
+}
+
+#memory.critical {
+  color: white;
+  box-shadow: inset 0px -16px 6px -12px red;
+  animation-name: blink-critical;
+  animation-duration: 2s;
+}
+
+#network.disconnected {
+  color: white;
+  box-shadow: inset 0px -16px 6px -12px orange;
+}
+
+#tray menu {
+  margin-bottom: 4px;
+  margin-top: 4px;
+  padding: 4px;
+}
+
+#tray menu menuitem {
+  min-height: 20px;
+  padding: 8px 4px 8px 4px;
+}
+
+#tray menu menuitem check {
+}
+
+#tray menu menuitem radio {
+  padding: 0;
+  margin-right: 6px;
+  min-height: 12px;
+  min-width: 12px;
+}
+
+label {
+  all: unset;
+}
+
+#backlight-slider,
+#pulseaudio-slider {
+  min-height: 8px;
+  min-width: 60px;
+  border-radius: 5px;
+  padding-left: 3px;
+  padding-right: 3px;
+}
+
+#backlight-slider slider,
+#pulseaudio-slider slider {
+  min-height: 8px;
+  min-width: 6px;
+  opacity: 0;
+  background-image: none;
+  border: none;
+  box-shadow: none;
+  border-radius: 5px;
+  background-color: @color1;
+}
+
+#backlight-slider trough,
+#pulseaudio-slider trough {
+  background-image: none;
+  min-height: 8px;
+  min-width: 60px;
+  border-radius: 5px;
+  background-color: @color8;
+}
+
+#backlight-slider highlight,
+#pulseaudio-slider highlight {
+  background-image: none;
+  min-width: 0px;
+  border-radius: 5px;
+  background-color: white;
+}
+
+/* ============================== */
+/*
+#myrightend {
+  margin-right: 3px;
+}
+#custom-spaceleft {
+  margin-left: 3px;
+}
+*/
+
+#myrightend {
+  margin-right: -2px;
+}
+#custom-spaceleft {
+  margin-left: -2px;
+}

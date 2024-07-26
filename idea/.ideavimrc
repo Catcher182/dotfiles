@@ -207,6 +207,8 @@ nnoremap <leader>mm :action ToggleBookmark <CR>
 nnoremap <leader>me :action EditBookmark <CR>
 
 
+nnoremap <leader>tr :action $EditorTranslateAction<CR>
+vnoremap <leader>tr :action $EditorTranslateAction<CR>
 
 
 

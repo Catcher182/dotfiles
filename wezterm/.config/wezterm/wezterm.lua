@@ -6,8 +6,8 @@ local config = wezterm.config_builder()
 pzfont.apply_to_config(config)
 pzcolor.apply_to_config(config)
 
-config.window_background_opacity = 0.9
--- config.window_background_opacity = 1.0
+-- config.window_background_opacity = 0.9
+config.window_background_opacity = 1.0
 
 config.use_fancy_tab_bar = false
 config.enable_tab_bar = true
@@ -43,6 +43,11 @@ config.keys = {
 		mods = "CTRL|SHIFT",
 		action = wezterm.action.ActivatePaneDirection("Prev"),
 	},
+	{
+		key = "l",
+		mods = "CTRL|SHIFT",
+		action = wezterm.action.DisableDefaultAssignment,
+	},
 }
 
 config.pane_focus_follows_mouse = true
@@ -63,5 +68,20 @@ config.warn_about_missing_glyphs = false
 -- else
 -- 	config.enable_wayland = true
 -- end
+wezterm.on("window-event", function(window, event)
+	if event == "pane-enter" then
+		local pane = window:get_active_pane()
+		local pane_id = pane:get_id()
+		local pane_title = pane:get_title()
+
+		-- 检查窗口标题是否包含nvim
+		if pane_title:match("nvim") then
+			-- 设置窗口填充为0
+			local overrides = window:get_config_overrides() or {}
+			overrides.window_padding = { 0, 0, 0, 0 }
+			window:set_config_overrides(overrides)
+		end
+	end
+end)
 
 return config

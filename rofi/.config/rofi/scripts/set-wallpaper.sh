@@ -29,10 +29,15 @@ else
 	wal --backend colorthief -a 60 -i $1 >/dev/null
 fi
 
-wallpaper="$(<"${HOME}/.cache/wal/wal")"
-
-if [ -z "$(<"${HOME}/.cache/wal/wal")" ]; then
+wallpaper=$(<"${HOME}/.cache/wal/wal")
+if [ -z "$wallpaper" ]; then
 	exit 1
+fi
+
+walfcitx5theme="/home/dawn/.config/rofi/scripts/wal-fcitx5-theme.sh"
+
+if [ -f "$walfcitx5theme" ]; then
+	bash "$walfcitx5theme"
 fi
 
 if [ $XDG_SESSION_DESKTOP = "Hyprland" ]; then

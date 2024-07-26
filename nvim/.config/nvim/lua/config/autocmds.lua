@@ -59,3 +59,29 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.keymap.set("i", ",l", "--------<Enter>", { buffer = event.buf, silent = true })
   end,
 })
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = {
+    "man",
+    "help",
+    "neo-tree",
+    "TelescopePrompt",
+    "Trouble",
+    "dapui_watches",
+    "dap-repl",
+    "dapui_console",
+    "dapui_stacks",
+    "dapui_breakpoints",
+    "dapui_scopes",
+    "Overseer*",
+    "Outline",
+    "undotree",
+    "grug-far",
+    "leetcode.nvim",
+  },
+  callback = function()
+    require("ufo").detach()
+    vim.opt_local.foldenable = false
+    vim.opt_local.foldcolumn = "0"
+  end,
+})

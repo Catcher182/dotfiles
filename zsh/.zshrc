@@ -147,7 +147,7 @@ SAVEHIST=1000
 zstyle :compinstall filename '/home/dawn/.zshrc'
 
 autoload -Uz compinit
-compinit
+# compinit
 # End of lines added by compinstall
 
 source ~/.config/zsh/zshrc

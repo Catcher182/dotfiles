@@ -7,12 +7,12 @@ local module = {}
 
 local appearance
 
-local success, colorscheme = pcall(require, "colorscheme")
-if success and colorscheme.appearance then
-	appearance = colorscheme.appearance
-else
-	appearance = "light"
-end
+-- local success, colorscheme = pcall(require, "colorscheme")
+-- if success and colorscheme.appearance then
+-- 	appearance = colorscheme.appearance
+-- else
+-- 	appearance = "light"
+-- end
 
 function get_appearance()
 	if appearance == "dark" then

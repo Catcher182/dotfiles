@@ -1,45 +1,40 @@
 {
     "layer": "top",
 
-    "position": "top",
-    "height": 26,
+    "position": "bottom",
+    "height": 30,
 
     "modules-left": [
         "custom/spaceleft",
+        "custom/splitline",
         "hyprland/submap",
         "hyprland/workspaces",
+        "custom/splitline",
         "mpd",
         "mpris",
         "wlr/taskbar",
-        "custom/spaceright",
-        "hyprland/window",
+        "hyprland/window"
     ],
     "modules-center": [
     ],
     "modules-right": [
-        //"wlr/taskbar",
         "group/myright",
-        //"clock",
-        //"tray",
-        "group/myrightend",
+        "custom/splitline",
+        "group/myrightend"
     ],
 
 
     "group/myright": {
         "orientation": "inherit",
         "modules": [
-            //"temperature",
             "group/hardware",
-            // "backlight",
-            // "pulseaudio",
             "group/mypulseaudio",
             "group/mybacklight",
             "bluetooth",
             "network",
-            //"idle_inhibitor",
-            //"custom/notification",
+            // "temperature",
             "group/mybattery",
-            "clock",
+            "clock"
         ]
     },
 
@@ -48,7 +43,7 @@
         "modules": [
             "tray",
             "idle_inhibitor",
-            "custom/notification",
+            "custom/notification"
         ]
     },
 
@@ -57,13 +52,13 @@
         "drawer": {
             "transition-duration": 500,
             "children-class": "drawer-child",
-            "transition-left-to-right": false,
+            "transition-left-to-right": false
         },
         "modules": [
             "memory",
             "disk",
             "custom/udisks",
-            "cpu",
+            "cpu"
         ]
     },
 
@@ -72,11 +67,11 @@
         "drawer": {
             "transition-duration": 300,
             "children-class": "drawer-child",
-            "transition-left-to-right": false,
+            "transition-left-to-right": false
         },
         "modules": [
             "backlight",
-            "backlight/slider",
+            "backlight/slider"
         ]
     },
 
@@ -85,11 +80,11 @@
         "drawer": {
             "transition-duration": 300,
             "children-class": "drawer-child",
-            "transition-left-to-right": false,
+            "transition-left-to-right": false
         },
         "modules": [
             "battery",
-            "power-profiles-daemon",
+            "power-profiles-daemon"
         ]
     },
 
@@ -98,18 +93,18 @@
         "drawer": {
             "transition-duration": 300,
             "children-class": "drawer-child",
-            "transition-left-to-right": false,
+            "transition-left-to-right": false
         },
         "modules": [
             "pulseaudio",
-            "pulseaudio/slider",
+            "pulseaudio/slider"
         ]
     },
 
 
 
     "hyprland/window":{
-        //"format": "-> {}",
+        // "format": "-> {}",
         //"separate-outputs": true,
     },
 
@@ -129,7 +124,7 @@
             "OVERVIEW":" Overview ",
             //"active": "+",
             "default": "0",
-            "special":" Special ",
+            "special":" Special "
         },
         //"persistent-workspaces": {},
         "show-special":true,
@@ -150,37 +145,30 @@
         // "on-click-right": "minimize-raise",
         "app_ids-mapping": {
           "firefoxdeveloperedition": "firefox-developer-edition",
-          "wezterm-float": "org.wezfurlong.wezterm",
+          "wezterm-float": "org.wezfurlong.wezterm"
         },
         "rewrite": {
             "Firefox Web Browser": "Firefox",
-            "Foot Server": "Terminal",
+            "Foot Server": "Terminal"
         }
     },
 
-    "custom/spaceright":{
-        "format": "",
-        "on-click": "hyprctl dispatch overview:toggle",
-        "on-click-right": "rofi -show window",
-        "tooltip":false,
+
+  
+    "custom/splitline":{
+        "format": "|"
     },
 
     "custom/spaceleft":{
         "format": "Arch",
         "on-click": "rofi -show drun -theme ~/.config/rofi/themes/launcher.rasi",
         "on-click-right": "rofi -show window",
-        "tooltip":false,
+        "tooltip":false
     },
     
     "hyprland/submap": {
-        "format": "{}",
+        "format": "{}"
         // "tooltip": false
-    },
-
-    "custom/close":{
-        "format":"",
-        "on-click": "hyprctl dispatch killactive 1",
-        "tooltip":false ,
     },
 
     "disk": {
@@ -196,12 +184,12 @@
             "warning": 30,
             "critical": 15
         },
+        // "tooltip": false,
         // Connected to AC
-        "format": "ϟ:{capacity}%", // Icon: bolt
+        "format": "ϟ:{capacity}%",
 
         // Not connected to AC
-        "format-discharging": "Battery:{capacity}%",
-        // "tooltip": false
+        "format-discharging": "Battery:{capacity}%"
     },
 
     "power-profiles-daemon": {
@@ -238,7 +226,7 @@
             "on-scroll-up": "shift_down",
             "on-scroll-down": "shift_up"
         },
-        "on-click-right": "thunderbird &",
+        "on-click-right": "thunderbird &"
     },
 
 
@@ -249,7 +237,7 @@
           "warning": 70,
           "critical": 90
         },
-        "on-click":"wezterm start --class 'btop' -e btop",
+        "on-click":"wezterm start --class 'btop' -e btop"
     },
 
     "memory": {
@@ -259,7 +247,7 @@
             "warning": 70,
             "critical": 90
         },
-        "on-click":"wezterm start --class 'btop' -e btop",
+        "on-click":"wezterm start --class 'btop' -e btop"
     },
 
     "network": {
@@ -289,9 +277,8 @@
             "car": "Vol-C",
             "default": "Vol"
         },
-        "on-click-right": "hdrop -f -p r -g -403 pavucontrol",
-        // "on-click-right": "pavucontrol",
-        "on-click": "pamixer -t",
+        "on-click-right": "pavucontrol",
+        "on-click": "pamixer -t"
     },
 
     "pulseaudio/slider": {
@@ -301,6 +288,7 @@
     },
 
     "temperature": {
+      "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
       "critical-threshold": 80,
       "interval": 5,
       "format": "{temperatureC}°C",
@@ -309,25 +297,24 @@
 
     "backlight": {
         // "device": "acpi_video1",
-        "format": "Light:{percent}%",
         // "tooltip": false,
+        "format": "Light:{percent}%"
     },
     "backlight/slider": {
         "min": 0,
         "max": 100,
-        "orientation": "horizontal",
+        "orientation": "horizontal"
         // "device": "intel_backlight"
     },
 
     "tray": {
-        "icon-size": 12,
-        "spacing": 6,
+        "icon-size": 14,
+        "spacing": 6
     },
         
     "bluetooth": {
       "on-click":"rofi-bluetooth",
-      "on-click-right":"hdrop -f -p r -g -403 blueman-manager",
-      // "on-click-right":"blueman-manager",
+      "on-click-right":"blueman-manager",
       //"format": "ᛒ:{status}",
       // "format": ":{status}",
       "format": "BT:{status}",
@@ -376,13 +363,13 @@
         "format": "{player_icon} {dynamic}",
         "format-paused": "{status_icon} {dynamic}",
         "player-icons": {
-            "default": "▶",
+            "default": "▶"
         },
         "status-icons": {
             "paused": ""
         },
-        "max-length": 15,
-        // "ignored-players": ["firefox"]
+        // "ignored-players": ["firefox"],
+        "max-length": 15
     },
 
     "custom/notification": {
@@ -397,15 +384,6 @@
             "inhibited-none": "󰂚",
             "dnd-inhibited-notification": "󱏩",
             "dnd-inhibited-none": "󰂛"
-
-            // "notification": "🔔<span foreground='red'><sup>⦁</sup></span>",
-            // "none": "🔔",
-            // "dnd-notification": "🔕<span foreground='red'><sup>⦁</sup></span>",
-            // "dnd-none": "🔕",
-            // "inhibited-notification": "🔔<span foreground='red'><sup>⦁</sup></span>",
-            // "inhibited-none": "🔔",
-            // "dnd-inhibited-notification": "🔕<span foreground='red'><sup>⦁</sup></span>",
-            // "dnd-inhibited-none": "🔕"
         },
         "return-type": "json",
         "exec-if": "which swaync-client",
@@ -420,7 +398,7 @@
         "on-click": "~/.config/rofi/scripts/rofi-udisks.sh mount",
         "on-click-right": "~/.config/rofi/scripts/rofi-udisks.sh umount",
         "on-click-middle": "~/.config/rofi/scripts/rofi-udisks.sh umountAll",
-        "restart-interval": 1,
-    },
+        "restart-interval": 1
+    }
 
 }

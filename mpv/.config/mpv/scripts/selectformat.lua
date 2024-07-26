@@ -1,7 +1,7 @@
 -- Name: mpv-selectformat
 -- Author: koonix <me@koonix.org>
 -- Upstream: https://github.com/koonix/mpv-selectformat
--- Version: 1.0.0
+-- Version: 1.0.2
 -- License: MIT
 
 local script_name = "selectformat"
@@ -63,6 +63,7 @@ local numshorten
 local sigcmp
 local is_network_stream
 local reload_resume
+local reload
 local update_ytdl_path
 local find_executable_path
 local get_ytdl_hook_opt_paths
@@ -180,7 +181,7 @@ local keys = {
 local data = {}
 local url = ""
 local ytdl_path = ""
-local searched_ytld_path = false
+local ytdl_not_found = false
 local is_menu_shown = false
 
 -- ====================
@@ -262,7 +263,11 @@ function formats_fold(width, height, audioonly)
 		fmt.is_unfolded = false
 
 		local fmt_audioonly = is_format_audioonly(fmt)
-		if not inserted_res[res] or res == unfold_res or (audioonly and res == "audio-only") then
+		if
+			not inserted_res[res]
+			or res == unfold_res
+			or (audioonly and res == "audio-only")
+		then
 			inserted_res[res] = true
 
 			if res == unfold_res or (audioonly and res == "audio-only") then
@@ -342,11 +347,16 @@ end
 function menu_draw()
 	local ass = assdraw.ass_new()
 	local header = get_menu_header()
-	local header_separator = (opts.prefix_header .. header):gsub(".", opts.header_separator)
+	local header_separator = (opts.prefix_header .. header):gsub(
+		".",
+		opts.header_separator
+	)
 
 	ass:pos(opts.menu_pos_x, opts.menu_pos_y)
 	ass:append(opts.ass_style)
-	ass:append(opts.prefix_header .. header .. "\\N" .. header_separator .. "\\N")
+	ass:append(
+		opts.prefix_header .. header .. "\\N" .. header_separator .. "\\N"
+	)
 
 	for idx, fmt in ipairs(data[url].formats) do
 		ass:append(menu_get_prefix(idx))
@@ -362,7 +372,10 @@ function menu_get_prefix(pos)
 		return opts.prefix_cursor
 	elseif pos == get_selected_pos() then
 		return opts.prefix_norm_sel
-	elseif not data[url].formats[pos].is_unfolded and pos == get_parent_of_selected_pos() then
+	elseif
+		not data[url].formats[pos].is_unfolded
+		and pos == get_parent_of_selected_pos()
+	then
 		return opts.prefix_norm_sel
 	else
 		return opts.prefix_norm
@@ -399,7 +412,8 @@ function menu_cursor_move(i)
 	if i == "top" then
 		data[url].cursor_fmt_id = data[url].formats[1].format_id
 	elseif i == "bottom" then
-		data[url].cursor_fmt_id = data[url].formats[#data[url].formats].format_id
+		data[url].cursor_fmt_id =
+			data[url].formats[#data[url].formats].format_id
 	else
 		local pos = get_cursor_pos() + i
 
@@ -417,7 +431,11 @@ end
 
 function menu_unfold()
 	local cursor_fmt = data[url].formats[get_cursor_pos()]
-	formats_fold(cursor_fmt.width, cursor_fmt.height, is_format_audioonly(cursor_fmt))
+	formats_fold(
+		cursor_fmt.width,
+		cursor_fmt.height,
+		is_format_audioonly(cursor_fmt)
+	)
 	menu_draw()
 end
 
@@ -500,7 +518,9 @@ function get_parent_of_selected_pos()
 		end
 
 		if sel_res ~= "" and getres(ufmt) ~= sel_res then
-			return get_format_id_pos(data[url].formats_unfolded[i + 1].format_id)
+			return get_format_id_pos(
+				data[url].formats_unfolded[i + 1].format_id
+			)
 		end
 
 		if i == 1 then
@@ -523,7 +543,10 @@ end
 function menu_select()
 	menu_hide()
 	data[url].selected_fmt_id = data[url].cursor_fmt_id
-	mp.set_property("ytdl-format", data[url].formats[get_selected_pos()].ytdl_format)
+	mp.set_property(
+		"ytdl-format",
+		data[url].formats[get_selected_pos()].ytdl_format
+	)
 	reload_resume()
 end
 
@@ -532,7 +555,9 @@ function is_fetch_in_progress()
 end
 
 function no_formats_available()
-	return not istable(data[url]) or not istable(data[url].formats) or #data[url].formats == 0
+	return not istable(data[url])
+		or not istable(data[url].formats)
+		or #data[url].formats == 0
 end
 
 -- build the youtube-dl format option for the given format
@@ -542,13 +567,20 @@ function build_ytdl_format_str(fmt)
 	else
 		local audiofmt = "bestaudio"
 
-		local maxpx = math.max(tonumber(fmt.width) or 1, tonumber(fmt.height) or 1)
+		local maxpx =
+			math.max(tonumber(fmt.width) or 1, tonumber(fmt.height) or 1)
 
 		if maxpx < 1000 then
 			audiofmt = "bestaudio[abr<=70]"
 		end
 
-		return string.format("%s+%s/%s+bestaudio/%s/best", fmt.format_id, audiofmt, fmt.format_id, fmt.format_id)
+		return string.format(
+			"%s+%s/%s+bestaudio/%s/best",
+			fmt.format_id,
+			audiofmt,
+			fmt.format_id,
+			fmt.format_id
+		)
 	end
 end
 
@@ -567,7 +599,8 @@ function build_format_label(fmt)
 	end
 
 	if codec then
-		codec = codec:gsub("av01", "av1"):gsub("avc1", "h264"):gsub("h265", "hevc")
+		codec =
+			codec:gsub("av01", "av1"):gsub("avc1", "h264"):gsub("h265", "hevc")
 	end
 
 	return strfmt_label(
@@ -827,7 +860,8 @@ function get_ytdl_format_args()
 	local rawopts = mp.get_property_native("ytdl-raw-options")
 
 	if isempty(fmtopt) then
-		fmtopt = is_loaded_file_audioonly() and "bestaudio/best" or "bestvideo+bestaudio/best"
+		fmtopt = is_loaded_file_audioonly() and "bestaudio/best"
+			or "bestvideo+bestaudio/best"
 	end
 
 	if fmtopt ~= "ytdl" then
@@ -846,7 +880,10 @@ end
 -- test wether the given format only contains an audio stream
 function is_format_audioonly(fmt)
 	return (is_param_valid(fmt.acodec) and (not is_param_valid(fmt.vcodec)))
-		or (is_param_valid(fmt.audio_ext) and (not is_param_valid(fmt.video_ext)))
+		or (
+			is_param_valid(fmt.audio_ext)
+			and (not is_param_valid(fmt.video_ext))
+		)
 end
 
 function is_loaded_file_audioonly()
@@ -944,9 +981,9 @@ function is_network_stream(path)
 end
 
 -- this function is a modified version of mpv-reload's reload_resume()
--- https://github.com/4e6/mpv-reload, commit c1219b6
+-- https://github.com/4e6/mpv-reload, commit 1a6a938
 function reload_resume()
-	local pos = mp.get_property("time-pos")
+	local timepos = mp.get_property("time-pos")
 	local duration = mp.get_property_native("duration")
 	local plcount = mp.get_property_number("playlist-count")
 	local plpos = mp.get_property_number("playlist-pos")
@@ -956,10 +993,16 @@ function reload_resume()
 		playlist[i] = mp.get_property("playlist/" .. i .. "/filename")
 	end
 
-	if pos and isnum(duration) and duration >= 0 then
-		mp.commandv("loadfile", url, "replace", "start=+" .. pos)
+	if timepos and isnum(duration) and duration >= 0 then
+		local set_time_pos
+		set_time_pos = function(t)
+			mp.set_property("time-pos", timepos)
+			mp.unregister_event(set_time_pos)
+		end
+		mp.register_event("file-loaded", set_time_pos)
+		reload(url, timepos)
 	else
-		mp.commandv("loadfile", url, "replace")
+		reload(url, nil)
 	end
 
 	for i = 0, plpos - 1 do
@@ -973,9 +1016,22 @@ function reload_resume()
 	end
 end
 
+function reload(path, timepos)
+	if timepos == nil then
+		mp.commandv("loadfile", path, "replace")
+		return
+	end
+	local success =
+		mp.commandv("loadfile", path, "replace", 0, "start=+" .. timepos) -- mpv >= v0.38.0
+	if not success then
+		mp.msg.warn("falling back to old loadfile syntax (mpv <= v0.37.0)")
+		mp.commandv("loadfile", path, "replace", "start=+" .. timepos) -- mpv <= v0.37.0
+	end
+end
+
 -- find the executable path of yt-dlp or youtube-dl and update the ytdl_path variable
 function update_ytdl_path()
-	if not searched_ytld_path then
+	if ytdl_not_found then
 		return false
 	elseif not isempty(ytdl_path) then
 		return true
@@ -983,7 +1039,8 @@ function update_ytdl_path()
 
 	local paths = {}
 
-	paths = get_ytdl_hook_opt_paths() or { "yt-dlp", "yt-dlp_x86", "youtube-dl" }
+	paths = get_ytdl_hook_opt_paths()
+		or { "yt-dlp", "yt-dlp_x86", "youtube-dl" }
 
 	for _, p in pairs(paths) do
 		p = find_executable_path(p)
@@ -993,7 +1050,7 @@ function update_ytdl_path()
 		end
 	end
 
-	searched_ytld_path = true
+	ytdl_not_found = true
 	msg.warn("couldn't find yt-dlp or youtube-dl")
 
 	return false

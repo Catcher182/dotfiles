@@ -7,7 +7,7 @@ export _JAVA_AWT_WM_NONREPARENTING=1
 
 eval "$(zoxide init zsh)"
 eval "$(fnm env --use-on-cd)"
-
+setopt clobber
 
 
 

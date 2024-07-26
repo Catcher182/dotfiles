@@ -1,3 +1,4 @@
 *.log
 shaders_cache/
 chapters/
+file_browser_favourites.txt

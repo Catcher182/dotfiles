@@ -75,13 +75,11 @@ kp ()
 
 ks() {
     local pid=$(lsof -Pwni tcp | sed 1d | eval "fzf -m --header='[kill:tcp]'" | awk '{print $2}')
-
     if [ "x$pid" != "x" ]
     then
         echo $pid | xargs kill -${1:-9}
         ks
     fi
-
 }
 
 cf(){
@@ -109,3 +107,10 @@ cf(){
 
 
 
+pimage (){
+  if [[ $1 =~ ^(http|https)://[a-zA-Z0-9.-]+\.[a-zA-Z]{2,} ]]; then
+    wget -qO- "$1" | chafa
+  else
+    chafa "$1"
+  fi
+}
