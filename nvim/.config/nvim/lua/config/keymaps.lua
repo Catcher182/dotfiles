@@ -1,15 +1,22 @@
 -- Keymaps are automatically loaded on the VeryLazy event
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 -- Add any additional keymaps here
+vim.keymap.set("i", "jj", "<ESC>")
 vim.keymap.set("n", "H", "^")
 vim.keymap.set("n", "L", "$")
-vim.keymap.set("n", "<leader>rdd", "ggdG")
-vim.keymap.set("n", "<leader>rdc", "ggcG")
-vim.keymap.set("n", "<leader>yy", "ggyG")
+vim.keymap.set("n", "<leader>v", "", { desc = "Peek/Misc" })
 vim.keymap.set("n", "<leader>vv", "ggVG")
+vim.keymap.set("n", "<leader>vD", function()
+  if vim.wo.diff then
+    vim.cmd("diffoff")
+  else
+    vim.cmd("diffthis")
+  end
+end, { desc = "Diff" })
+vim.keymap.set("v", "<leader>vD", ":Linediff<CR>", { desc = "Linediff" })
 vim.keymap.set("n", "<leader>uz", "<Cmd>ZenMode<CR>", { desc = "ZenMode" })
 vim.keymap.set("n", "<leader>ua", "<Cmd>TransparentToggle<CR>", { desc = "TransparentToggle" })
-vim.keymap.set("n", "<leader>ub", function()
+vim.keymap.set("n", "<leader>uB", function()
   local background_value = vim.o.background
   if background_value == "dark" then
     os.execute("/home/dawn/.config/rofi/scripts/rofi-colorscheme.sh Light > /dev/null 2>&1")
@@ -36,10 +43,9 @@ vim.keymap.set("n", "<leader>tf", "<cmd>3ToggleTerm direction=float name=float<c
 vim.keymap.set("n", "<C-/>", "<cmd>ToggleTermToggleAll<cr>", { desc = "ToggleTerm" })
 
 vim.keymap.set("n", "<F29>", "<cmd>OverseerRun<cr>")
-vim.keymap.set("n", "<leader>run", "<cmd>OverseerRun<cr>")
-vim.keymap.set("n", "<leader>rut", "<cmd>OverseerToggle<cr>")
 vim.keymap.set("n", "<F41>", "<cmd>OverseerToggle<cr>")
 vim.keymap.set("n", "<F5>", function()
+  vim.fn.sign_define("DapStopped", { text = "󰁕 ", texthl = "DiagnosticWarn", linehl = "DapStoppedLine", numhl = "" })
   require("dap").continue()
 end)
 vim.keymap.set("n", "<F6>", function()
@@ -126,3 +132,50 @@ vim.keymap.set("n", "<leader>df", function()
     dap.defaults.fallback.force_external_terminal = true
   end
 end, { desc = "Toggle Dap Fallback External Terminal" })
+
+-- vim.api.nvim_set_keymap(
+--   "n",
+--   "n",
+--   [[<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>]],
+--   { noremap = true, silent = true }
+-- )
+-- vim.api.nvim_set_keymap(
+--   "n",
+--   "N",
+--   [[<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>]],
+--   { noremap = true, silent = true }
+-- )
+
+local function nN(char)
+  local ok, winid = require("hlslens").nNPeekWithUFO(char)
+  if ok and winid then
+    -- Safe to override buffer scope keymaps remapped by ufo,
+    -- ufo will restore previous buffer keymaps before closing preview window
+    -- Type <CR> will switch to preview window and fire `trace` action
+    vim.keymap.set("n", "<CR>", function()
+      return "<Tab><CR>"
+    end, { buffer = true, remap = true, expr = true })
+  end
+end
+
+vim.keymap.set({ "n", "x" }, "n", function()
+  nN("n")
+end)
+vim.keymap.set({ "n", "x" }, "N", function()
+  nN("N")
+end)
+
+vim.api.nvim_set_keymap("n", "*", [[*<Cmd>lua require('hlslens').start()<CR>]], { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "#", [[#<Cmd>lua require('hlslens').start()<CR>]], { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "g*", [[g*<Cmd>lua require('hlslens').start()<CR>]], { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "g#", [[g#<Cmd>lua require('hlslens').start()<CR>]], { noremap = true, silent = true })
+
+-- vim.api.nvim_set_keymap("n", "<Leader>l", "<Cmd>noh<CR>", { noremap = true, silent = true })
+vim.keymap.set({ "n", "x" }, "<Leader>L", function()
+  vim.schedule(function()
+    if require("hlslens").exportLastSearchToQuickfix() then
+      vim.cmd("cw")
+    end
+  end)
+  return ":noh<CR>"
+end, { expr = true, desc = "Send search results to Quickfix" })

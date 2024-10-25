@@ -1,4 +1,7 @@
 *.log
+icc_cache/
 shaders_cache/
 chapters/
+watch_later/
+subtitles/
 file_browser_favourites.txt

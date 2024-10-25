@@ -1,0 +1,46 @@
+body {
+  --status-bar-position: absolute;
+  --status-bar-radius: var(--radius-m);
+}
+body .status-bar {
+  transform: translateX(calc(90% + 5px));
+  transition: opacity 300ms ease, transform 300ms ease;
+  bottom: 5px;
+  right: 5px;
+  opacity: 0;
+  border-width:1px;
+  background-color:var(--background-secondary-alt) !important;
+}
+body .status-bar:hover {
+  transform: none;
+  opacity: 1;
+}
+
+
+/* AnuPpuccin */
+/*
+  body {
+    --status-bar-position: absolute;
+    --status-bar-radius: var(--radius-m);
+  }
+  body .status-bar {
+    transform: translateX(calc(100% + 5px));
+    transition: transform 300ms 150ms;
+    bottom: 5px;
+    right: 5px;
+  }
+  body .status-bar::before {
+    width: 100%;
+    min-height: 100%;
+    content: " ";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    transform: translateX(-100%);
+  }
+  body .status-bar:hover {
+    transform: none;
+    transition: transform 300ms 150ms;
+  }
+*/
+

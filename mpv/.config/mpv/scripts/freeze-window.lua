@@ -1,5 +1,6 @@
 -- credit to TheAMM
 -- 关闭自动调节窗口大小
+-- https://github.com/mpv-player/mpv/issues/9325
 
 local size_changed = false
 
@@ -21,4 +22,3 @@ end)
 mp.observe_property("osd-height", "native", function()
 	size_changed = true
 end)
-

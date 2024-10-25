@@ -5,14 +5,26 @@ return {
     "akinsho/bufferline.nvim",
     opts = {
       options = {
+        separator_style = { "", "" },
+        -- separator_style = "slope",
         buffer_close_icon = "✘",
         -- numbers = function(opts)
         --   return string.format("%s·%s", opts.raise(opts.id), opts.lower(opts.ordinal))
         -- end,
-        -- indicator = {
-        --   icon = "▎", -- this should be omitted if indicator style is not 'icon'
-        --   style = "icon" | "underline" | "none",
-        -- },
+        indicator = {
+          icon = "▎", -- this should be omitted if indicator style is not 'icon'
+          --   style = "icon" | "underline" | "none",
+          style = "icon",
+        },
+        offsets = {
+          -- {
+          --   filetype = "neo-tree",
+          --   text = "Neo-tree",
+          --   highlight = "BufferLineBackground",
+          --   text_align = "center",
+          --   padding = 1,
+          -- },
+        },
       },
     },
   },
@@ -23,17 +35,21 @@ return {
       local opts = {
         options = {
           icons_enabled = true,
-          theme = "edge",
+          theme = "auto",
           component_separators = "",
-          -- section_separators = { left = "", right = "" },
-          section_separators = { left = "", right = "" },
+          section_separators = { left = "", right = "" },
+          -- section_separators = { left = "", right = "" },
         },
-
         sections = {
           lualine_a = {
             "mode",
           },
           lualine_b = {
+            {
+              function()
+                return vim.g.remote_neovim_host and ("Remote: %s"):format(vim.uv.os_gethostname()) or ""
+              end,
+            },
             "branch",
             {
               "diff",
@@ -118,6 +134,9 @@ return {
   {
     "xiyaowong/transparent.nvim",
     opts = function()
+      -- require("transparent").clear_prefix("lualine_c")
+      -- require("transparent").clear_prefix("lualine_x")
+      -- require("transparent").clear_prefix("NeoTree")
       return { -- Optional, you don't have to run setup.
         groups = { -- table: default groups
           "Normal",
@@ -140,20 +159,24 @@ return {
           "LineNr",
           "NonText",
           "SignColumn",
-          "CursorLine",
+          -- "CursorLine",
           "CursorLineNr",
           "StatusLine",
           "StatusLineNC",
           "EndOfBuffer",
+          "FloatBorder",
         },
         extra_groups = {
           -- "NormalFloat",
-          "NvimTreeNormal",
-          "NeoTreeNormal",
-          "NeoTreeFloatBorder",
-          "NeoTreeNormalNC",
+          -- "NeoTreeNormal",
+          -- "NeoTreeFloatBorder",
+          -- "NeoTreeNormalNC",
+          -- "NeoTreeIndentMarker",
+          -- "NeoTreeExpander",
           "WinBar",
           "FoldColumn",
+          "SagaTitle",
+          "SagaActionTitle",
         }, -- table: additional groups that should be cleared
         exclude_groups = {
           "TreesitterContext",
@@ -165,6 +188,7 @@ return {
   },
   {
     "typicode/bg.nvim",
+    lazy = false,
   },
   {
     "lukas-reineke/indent-blankline.nvim",
@@ -230,19 +254,22 @@ return {
           "Overseer*",
           "Outline",
           "undotree",
-          "grug-far",
+          "Mundo",
+          "MundoDiff",
           "leetcode.nvim",
+          "toggleterm",
+          "grug-far",
         },
-        bt_ignore = { "nofile", "prompt" },
+        bt_ignore = { "prompt" },
         -- Default segments (fold -> sign -> line number + separator), explained below
         segments = {
-          { text = { builtin.foldfunc, " " }, click = "v:lua.ScFa" },
           { text = { "%s" }, click = "v:lua.ScSa" },
           {
             text = { builtin.lnumfunc, " " },
             condition = { true, builtin.not_empty },
             click = "v:lua.ScLa",
           },
+          { text = { builtin.foldfunc, " " }, click = "v:lua.ScFa" },
         },
       }
       return cfg
@@ -308,6 +335,7 @@ return {
   },
   {
     "folke/zen-mode.nvim",
+    event = "VeryLazy",
     opts = {
       window = {
         backdrop = 0.95, -- shade the backdrop of the Zen window. Set to 1 to keep the same as Normal
@@ -360,6 +388,16 @@ return {
     "nvim-neo-tree/neo-tree.nvim",
     opts = {
       popup_border_style = "rounded",
+      event_handlers = {
+        {
+          event = "neo_tree_buffer_enter",
+          handler = function()
+            vim.api.nvim_set_hl(0, "NeoTreeNormal", { link = "Normal" })
+            vim.api.nvim_set_hl(0, "NeoTreeNormalNC", { link = "Normal" })
+            vim.api.nvim_set_hl(0, "NeoTreeEndOfBuffer", { link = "Normal" })
+          end,
+        },
+      },
     },
   },
   {
@@ -396,6 +434,7 @@ return {
       local glance = require("glance")
       local actions = glance.actions
       vim.api.nvim_set_hl(0, "GlanceListNormal", { link = "NormalFloat" })
+      vim.api.nvim_set_hl(0, "GlancePreviewNormal", { link = "NormalFloat" })
 
       return {
         height = 18, -- Height of the window
@@ -532,56 +571,7 @@ return {
     },
   },
   {
-    "lewis6991/satellite.nvim",
-    opts = {
-      current_only = false,
-      winblend = 50,
-      zindex = 40,
-      excluded_filetypes = {
-        "dashboard",
-        "neo-tree",
-        "dapui_watches",
-        "dap-repl",
-        "dapui_console",
-        "dapui_stacks",
-        "dapui_breakpoints",
-        "dapui_scopes",
-        "Outline",
-        "undotree",
-        "grug-far",
-        "leetcode.nvim",
-      },
-      width = 2,
-      handlers = {
-        cursor = {
-          enable = true,
-          symbols = { "⎺", "⎻", "⎼", "⎽" },
-        },
-        search = {
-          enable = true,
-        },
-        diagnostic = {
-          enable = true,
-          signs = { "-", "=", "≡" },
-          min_severity = vim.diagnostic.severity.HINT,
-        },
-        gitsigns = {
-          enable = false,
-          signs = { -- can only be a single character (multibyte is okay)
-            add = "│",
-            change = "│",
-            delete = "-",
-          },
-        },
-        marks = {
-          enable = true,
-          show_builtins = false, -- shows the builtin marks like [ ] < >
-          key = "m",
-        },
-        quickfix = {
-          signs = { "-", "=", "≡" },
-        },
-      },
-    },
+    "kevinhwang91/nvim-hlslens",
+    opts = {},
   },
 }

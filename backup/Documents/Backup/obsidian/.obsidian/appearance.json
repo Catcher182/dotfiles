@@ -1,0 +1,20 @@
+{
+  "accentColor": "#6058b8",
+  "theme": "system",
+  "cssTheme": "AnuPpuccin",
+  "baseFontSize": 16,
+  "showViewHeader": true,
+  "enabledCssSnippets": [
+    "Mobile-toolbar-button",
+    "floating-status-bar-AnuPpuccin",
+    "Vertical-Stacked-Tabs",
+    "my-style",
+    "extended-colorschemes",
+    "hidesidebarbutton"
+  ],
+  "nativeMenus": false,
+  "interfaceFontFamily": "Roboto,Noto Sans CJK SC,Noto Sans",
+  "textFontFamily": "Roboto,Noto Sans CJK SC,Noto Sans",
+  "monospaceFontFamily": "monospace,Source Code Pro",
+  "baseFontSizeAction": true
+}

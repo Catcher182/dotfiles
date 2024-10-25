@@ -1,4 +1,5 @@
 set ratios 1:2:3
+
 set previewer ctpv
 set cleaner ctpvclear
 &ctpv -s $id
@@ -37,6 +38,8 @@ set period 1
 # set info size
 # set dircounts
 
+
+set mouse true
 
 
 
@@ -172,7 +175,7 @@ cmd on-cd &{{
 }}
 
 cmd fzfn ${{
-    fzname=$(fzf --preview="/home/dawn/.config/zsh/ctpv-no-img.sh {}")
+    fzname=$(fzf --preview=$fzf_preview_cmd)
     if [ ! $fzname ]; then
         exit 0
     else
@@ -180,13 +183,12 @@ cmd fzfn ${{
     fi
 }}
 
-
 # You can bind keys in lf to your usual fzf commands
 map F fzfn
 
 # If you want to jump to a file or directory in lf using fuzzy matching, you can utilize fzf for this purpose
 cmd fzf_jump ${{
-    res="$(find . -maxdepth 1 | fzf --reverse --header='Jump to location' --preview="/home/dawn/.config/zsh/ctpv-no-img.sh {}"| sed 's/\\/\\\\/g;s/"/\\"/g')"
+    res="$(find . -maxdepth 1 | fzf --reverse --header='Jump to location' --preview=$fzf_preview_cmd | sed 's/\\/\\\\/g;s/"/\\"/g')"
     if [ -d "$res" ] ; then
         cmd="cd"
     elif [ -f "$res" ] ; then
@@ -196,8 +198,22 @@ cmd fzf_jump ${{
     fi
     lf -remote "send $id $cmd \"$res\""
 }}
-map <c-f> :fzf_jump
 map f :fzf_jump
+
+
+cmd fzf_jump_all ${{
+    res="$(fzf --reverse --header='Jump to location' --preview=$fzf_preview_cmd | sed 's/\\/\\\\/g;s/"/\\"/g')"
+    if [ -d "$res" ] ; then
+        cmd="cd"
+    elif [ -f "$res" ] ; then
+        cmd="select"
+    else
+        exit 0
+    fi
+    lf -remote "send $id $cmd \"$res\""
+}}
+map <c-f> :fzf_jump_all
+
 
 # Combining fzf with ripgrep, you can interactively search in the contents of files under the current directory and select a file from the results
 cmd fzf_search ${{
@@ -655,7 +671,7 @@ map pp paste-progress
 cmd kdeconnect-sendfile ${{
   kdeconnect-cli -n "$(kdeconnect-cli -a --name-only | fzf)" --share $fx
 }}
-map pf :kdeconnect-sendfile
+map pf kdeconnect-sendfile
 
 
 cmd VIDEOtoMOV ${{

@@ -204,6 +204,7 @@ return {
   },
   {
     "sindrets/winshift.nvim",
+    event = "VeryLazy",
     opts = {
       -- Lua
       highlight_moving_win = true, -- Highlight the window being moved
@@ -274,9 +275,6 @@ return {
     ft = "qf",
     dependencies = {
       "junegunn/fzf",
-      build = function()
-        vim.fn["fzf#install"]()
-      end,
     },
     opts = {
       auto_enable = true,
@@ -321,23 +319,6 @@ return {
     },
   },
   {
-    "LunarVim/bigfile.nvim",
-    opts = {
-      filesize = 5, -- size of the file in MiB, the plugin round file sizes to the closest MiB
-      pattern = { "*" }, -- autocmd pattern or function see <### Overriding the detection of big files>
-      features = { -- features to disable
-        "indent_blankline",
-        "illuminate",
-        "lsp",
-        "treesitter",
-        "syntax",
-        "matchparen",
-        "vimopts",
-        "filetype",
-      },
-    },
-  },
-  {
     "max397574/colortils.nvim",
     cmd = "Colortils",
     keys = {
@@ -345,7 +326,7 @@ return {
     },
     opts = {
       register = "+",
-      color_preview = "█ %s",
+      color_preview = "█ %s ",
       default_format = "hex",
       default_color = "#000000",
       border = "rounded",
@@ -433,20 +414,92 @@ return {
       "TextCaseOpenTelescopeLSPChange",
       "TextCaseStartReplacingCommand",
     },
-    -- If you want to use the interactive feature of the `Subs` command right away, text-case.nvim
-    -- has to be loaded on startup. Otherwise, the interactive feature of the `Subs` will only be
-    -- available after the first executing of it or after a keymap of text-case.nvim has been used.
-    lazy = false,
   },
   {
     "echasnovski/mini.align",
     version = false,
+    event = "VeryLazy",
     opts = {
-      -- Module mappings. Use `''` (empty string) to disable one.
       mappings = {
         start = "",
         start_with_preview = "gA",
       },
     },
+  },
+  {
+    "echasnovski/mini.operators",
+    version = false,
+    event = "VeryLazy",
+    opts = {
+      -- Evaluate text and replace with output
+      evaluate = {
+        prefix = "<leader>v=",
+        -- Function which does the evaluation
+        func = nil,
+      },
+      -- Exchange text regions
+      exchange = {
+        prefix = "<leader>vx",
+        -- Whether to reindent new text to match previous indent
+        reindent_linewise = true,
+      },
+      -- Multiply (duplicate) text
+      multiply = {
+        prefix = "<leader>vt",
+        -- Function which can modify text before multiplying
+        func = nil,
+      },
+      -- Replace text with register
+      replace = {
+        prefix = "<leader>vp",
+        reindent_linewise = true,
+      },
+      -- Sort text
+      sort = {
+        prefix = "<leader>vs",
+        -- Function which does the sort
+        func = nil,
+      },
+    },
+  },
+  {
+    "HakonHarnes/img-clip.nvim",
+    -- event = "VeryLazy",
+    ft = { "markdown", "vimwiki", "tex", "typst", "rst", "asciidoc", "org", "html", "css" },
+    opts = {
+      default = {
+        use_absolute_path = false, ---@type boolean
+        relative_to_current_file = true, ---@type boolean
+        insert_mode_after_paste = true, ---@type boolean
+        -- image options
+        copy_images = true, ---@type boolean
+        download_images = true, ---@type boolean
+      },
+      filetypes = {
+        markdown = {
+          url_encode_path = true, ---@type boolean
+          template = "![$CURSOR]($FILE_PATH)", ---@type string
+          download_images = true, ---@type boolean
+        },
+      },
+    },
+  },
+  {
+    "keaising/im-select.nvim",
+    opts = {},
+  },
+  {
+    "andrewradev/linediff.vim",
+    event = "VeryLazy",
+  },
+  {
+    "rhysd/conflict-marker.vim",
+  },
+  {
+    "tpope/vim-fugitive",
+  },
+  {
+    "soulis-1256/eagle.nvim",
+    opts = {},
   },
 }

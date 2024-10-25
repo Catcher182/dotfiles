@@ -1,15 +1,6 @@
-/**
- *
- * Author : Aditya Shakya (adi1090x)
- * Github : @adi1090x
- * 
- * Rofi Theme File
- * Rofi Version: 1.7.3
- **/
-
 /*****----- Configuration -----*****/
 configuration {
-	/* modi:                       "drun,run,filebrowser"; */
+    /* modi:                       "drun,run,filebrowser"; */
     modi:                       "drun,run,window,filebrowser,ssh";
     show-icons:                 true;
     icon-theme:                 "Fluent";
@@ -22,9 +13,9 @@ configuration {
     display-filebrowser:        "Files";
     display-window:             "Windows";
     display-ssh:                "ssh";
-	drun-display-format:        "{name} [<span weight='light' size='small'><i>({generic})</i></span>]";
-	window-format:              "{w}  {c}  {t}";
-	/* window-format:              "{w} · {c} · {t}"; */
+    drun-display-format:        "{name} [<span weight='light' size='small'><i>({generic})</i></span>]";
+    window-format:              "{w}  {c}  {t}";
+    /* window-format:              "{w} · {c} · {t}"; */
 }
 
 /*****----- Global Properties -----*****/

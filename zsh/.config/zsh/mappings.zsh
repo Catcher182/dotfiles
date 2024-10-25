@@ -9,37 +9,32 @@ function xdg-set(){
 }
 
 # 用fzf快速打开文件
-# function open(){
-#    usepath="$(fzf)"
-#    if [ -n "$usepath" ];then
-#     binary_file="xlsx xls xlsm doc docx ppt pptx" # 自定义需要后台打开的文件类型
-#     if [[ "$binary_file" =~ ${usepath##*.} ]];then
-#       nohup xdg-open "$usepath" >/dev/null 2>&1 & # 后台执行
-#     else
-#       xdg-open "$usepath" # 使用默认程序打开
-#     fi
-#    fi
-# }
-
 function fopen(){
-    usepath="$(fzf)"
-    if [ -n "$usepath" ];then
-        # xdg-open "$usepath" # 使用默认程序打开
+   usepath="$(fzf --preview=$fzf_preview_cmd)"
+   if [ -n "$usepath" ];then
+    binary_file="xlsx xls xlsm doc docx ppt pptx" # 自定义需要后台打开的文件类型
+    if [[ "$binary_file" =~ ${usepath##*.} ]];then
       nohup xdg-open "$usepath" >/dev/null 2>&1 & # 后台执行
+    else
+      xdg-open "$usepath" # 使用默认程序打开
     fi
+   fi
 }
 
 function vfzf(){
-    usepath="$(fzf)"
+    usepath="$(fzf --preview=$fzf_preview_cmd)"
     if [ -n "$usepath" ];then
         vim ${usepath}
     fi
 }
 
 function ff(){
-    usepath="$(fzf)"
-    if [ -n "$usepath" ];then
-        ${1} ${usepath}
+    usepath="$(fzf --preview=$fzf_preview_cmd)"
+
+    if [[ -n $1 && -n "$usepath" ]]; then
+        $1 "$usepath"
+    elif [[ -z $1 ]]; then
+        echo "$usepath"
     fi
 }
 
@@ -63,7 +58,6 @@ set-wallpaper ()
 
 kp ()
 {
-    
     local pid=$(ps -ef | sed 1d | eval "fzf -m --header='[kill:process]'" | awk '{print $2}')
 
     if [ "x$pid" != "x" ]
@@ -108,7 +102,9 @@ cf(){
 
 
 pimage (){
-  if [[ $1 =~ ^(http|https)://[a-zA-Z0-9.-]+\.[a-zA-Z]{2,} ]]; then
+  if [[ -z $1 ]]; then
+    fzf --preview=$fzf_preview_cmd --preview-window=up
+  elif [[ $1 =~ ^(http|https)://[a-zA-Z0-9.-]+\.[a-zA-Z]{2,} ]]; then
     wget -qO- "$1" | chafa
   else
     chafa "$1"

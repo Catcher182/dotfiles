@@ -1,0 +1,24 @@
+notebook > header,
+.background,
+menubar,
+menubar:backdrop,
+searchbar > revealer > box,
+.toolbar,
+toolbar,
+.sidebar,
+headerbar,
+headerbar:backdrop,
+filechooser #pathbarbox {
+  background-color: #ffffff;
+}
+button:focus {
+  box-shadow:
+    inset 0 0 0 1px rgba(0, 0, 0, 0.18),
+    0 0 0 2px transparent;
+  border-color: rgba(0, 0, 0, 0.08);
+  border-bottom-color: rgba(0, 0, 0, 0.18);
+}
+tooltip.background {
+  background-color: rgba(255, 255, 255, 0.9);
+  color: #000000;
+}

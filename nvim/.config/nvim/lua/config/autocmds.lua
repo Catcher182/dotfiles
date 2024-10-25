@@ -9,23 +9,14 @@ vim.api.nvim_create_autocmd("User", {
   end,
 })
 
-vim.api.nvim_create_autocmd("VimEnter", {
-  pattern = "*",
+vim.api.nvim_create_autocmd("User", {
   callback = function()
-    local file = io.open("/home/dawn/.cache/mycolorscheme", "r")
-    -- 读取文件内容并赋值给变量
-    local appearance = file and file:read("*a"):gsub("%s+", "") or "light"
-    -- 关闭文件
-    if file then
-      file:close()
-    end
-    if appearance == "dark" then
-      vim.opt.background = "dark"
-    elseif appearance == "light" then
-      vim.opt.background = "light"
-    end
+    vim.api.nvim_set_hl(0, "ConflictMarkerBegin", { link = "DiffAdd" })
+    vim.api.nvim_set_hl(0, "ConflictMarkerOurs", { link = "DiffAdd" })
+    vim.api.nvim_set_hl(0, "ConflictMarkerTheirs", { link = "DiffText" })
+    vim.api.nvim_set_hl(0, "ConflictMarkerEnd", { link = "DiffText" })
+    vim.api.nvim_set_hl(0, "ConflictMarkerCommonAncestorsHunk", { link = "DiffChange" })
   end,
-  nested = true,
 })
 
 vim.api.nvim_create_autocmd("FileType", {
@@ -76,8 +67,10 @@ vim.api.nvim_create_autocmd("FileType", {
     "Overseer*",
     "Outline",
     "undotree",
-    "grug-far",
+    "Mundo",
+    "MundoDiff",
     "leetcode.nvim",
+    "toggleterm",
   },
   callback = function()
     require("ufo").detach()

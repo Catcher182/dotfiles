@@ -1,6 +1,15 @@
 return {
   {
     "nvim-java/nvim-java",
+    ft = {
+      "java",
+      "xml",
+      "properties",
+      "yaml",
+      "yml",
+      "gradle",
+      "groovy",
+    },
     config = false,
     dependencies = {
       {
@@ -9,6 +18,108 @@ return {
           servers = {
             jdtls = {
               -- Your custom jdtls settings goes here
+              init_options = {
+                documentSymbol = {
+                  dynamicRegistration = true,
+                  hierarchicalDocumentSymbolSupport = true,
+                  labelSupport = true,
+                  symbolKind = {
+                    valueSet = {
+                      1,
+                      2,
+                      3,
+                      4,
+                      5,
+                      6,
+                      7,
+                      8,
+                      9,
+                      10,
+                      11,
+                      12,
+                      13,
+                      14,
+                      15,
+                      16,
+                      17,
+                      18,
+                      19,
+                      20,
+                      21,
+                      22,
+                      23,
+                      24,
+                      25,
+                      26,
+                      27,
+                      28,
+                      29,
+                      30,
+                      31,
+                    },
+                  },
+                },
+              },
+
+              single_file_support = true,
+              settings = {
+                java = {
+                  autobuild = { enabled = true },
+                  server = { launchMode = "Hybrid" },
+                  eclipse = {
+                    downloadSources = true,
+                  },
+                  maven = {
+                    downloadSources = true,
+                  },
+                  import = {
+                    gradle = {
+                      enabled = true,
+                    },
+                    maven = {
+                      enabled = true,
+                    },
+                  },
+                  references = {
+                    includeDecompiledSources = true,
+                  },
+                  implementationsCodeLens = {
+                    enabled = true,
+                  },
+                  referenceCodeLens = {
+                    enabled = true,
+                  },
+                  -- https://github.com/eclipse-jdtls/eclipse.jdt.ls/issues/2948
+                  inlayHints = {
+                    parameterNames = {
+                      ---@type "none" | "literals" | "all"
+                      enabled = "all",
+                    },
+                  },
+                  signatureHelp = {
+                    enabled = true,
+                    description = {
+                      enabled = true,
+                    },
+                  },
+                  symbols = {
+                    includeSourceMethodDeclarations = true,
+                  },
+                  -- https://stackoverflow.com/questions/74844019/neovim-setting-up-jdtls-with-lsp-zero-mason
+                  rename = { enabled = true },
+
+                  contentProvider = {
+                    preferred = "fernflower",
+                  },
+                  sources = {
+                    organizeImports = {
+                      starThreshold = 9999,
+                      staticStarThreshold = 9999,
+                    },
+                  },
+                },
+                redhat = { telemetry = { enabled = false } },
+              },
             },
           },
           setup = {
@@ -98,6 +209,21 @@ return {
       -- Generates a springtime.log with debug and errors.
       internal = {
         log_debug = false,
+      },
+    },
+  },
+  {
+    "hedyhli/outline.nvim",
+    opts = {
+      providers = {
+        priority = { "lsp", "coc", "markdown", "norg" },
+        lsp = {
+          -- Lsp client names to ignore
+          blacklist_clients = { "spring-boot" },
+        },
+        markdown = {
+          filetypes = { "markdown" },
+        },
       },
     },
   },

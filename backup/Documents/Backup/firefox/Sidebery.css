@@ -105,7 +105,6 @@
   /*height: 40px !important;*/
   padding: 4.5px 6px 4.5px 6px !important;
   /*background-color: # !important;*/
-  margin-bottom: 5px;
 
   border-bottom: var(--tabs-activated-bg) solid 2px !important;
 
@@ -199,6 +198,12 @@
   }
 
   .SearchBar {
+    height: 0px;
+  }
+  .SearchBar .search-icon,
+  .SearchBar .input,
+  .SearchBar .placeholder,
+  .SearchBar .clear-btn {
     display: none;
   }
 

@@ -1,0 +1,21 @@
+{
+  "showInlineTitle": true,
+  "attachmentFolderPath": "./assets",
+  "alwaysUpdateLinks": true,
+  "newLinkFormat": "relative",
+  "useMarkdownLinks": false,
+  "showUnsupportedFiles": true,
+  "vimMode": true,
+  "promptDelete": false,
+  "showLineNumber": false,
+  "pdfExportSettings": {
+    "includeName": true,
+    "pageSize": "A4",
+    "landscape": false,
+    "margin": "0",
+    "downscalePercent": 100
+  },
+  "readableLineLength": true,
+  "livePreview": true,
+  "showRibbon": true
+}

@@ -5,22 +5,8 @@ return {
       local config = require("fzf-lua.config")
       local actions = require("fzf-lua.actions")
 
-      local deltabg = "delta --" .. vim.o.background
-
-      -- Quickfix
-      config.defaults.keymap.fzf["ctrl-q"] = "select-all+accept"
-      config.defaults.keymap.fzf["ctrl-u"] = "half-page-up"
-      config.defaults.keymap.fzf["ctrl-d"] = "half-page-down"
-      config.defaults.keymap.fzf["ctrl-x"] = "jump"
-      config.defaults.keymap.fzf["ctrl-f"] = "preview-page-down"
-      config.defaults.keymap.fzf["ctrl-b"] = "preview-page-up"
-      config.defaults.keymap.builtin["<c-f>"] = "preview-page-down"
-      config.defaults.keymap.builtin["<c-b>"] = "preview-page-up"
-
-      -- Trouble
-      if LazyVim.has("trouble.nvim") then
-        config.defaults.actions.files["ctrl-t"] = require("trouble.sources.fzf").actions.open
-      end
+      local deltabg = "delta --side-by-side --width=$FZF_PREVIEW_COLUMNS --hunk-header-style='omit' --"
+        .. vim.o.background
 
       -- Toggle root dir / cwd
       config.defaults.actions.files["ctrl-r"] = function(_, ctx)
@@ -47,7 +33,7 @@ return {
 
       local img_previewer ---@type string[]?
       for _, v in ipairs({
-        { cmd = "ueberzug", args = {} },
+        -- { cmd = "ueberzug", args = {} },
         { cmd = "chafa", args = { "{file}", "--format=symbols" } },
         { cmd = "viu", args = { "-b" } },
       }) do
@@ -58,7 +44,22 @@ return {
       end
 
       return vim.tbl_deep_extend("force", defaults, {
-        fzf_colors = true,
+        -- fzf_colors = true,
+        fzf_colors = {
+          ["fg"] = { "fg", "CursorLine" },
+          ["bg"] = { "bg", "Normal" },
+          ["hl"] = { "fg", "Comment" },
+          ["fg+"] = { "fg", "Normal" },
+          ["bg+"] = { "bg", "CursorLine" },
+          ["hl+"] = { "fg", "Statement" },
+          ["info"] = { "fg", "PreProc" },
+          ["prompt"] = { "fg", "Conditional" },
+          ["pointer"] = { "fg", "Exception" },
+          ["marker"] = { "fg", "Keyword" },
+          ["spinner"] = { "fg", "Label" },
+          ["header"] = { "fg", "Comment" },
+          ["gutter"] = "-1",
+        },
         fzf_opts = {
           ["--no-scrollbar"] = true,
         },
@@ -88,6 +89,7 @@ return {
             winopts = {
               title = " " .. vim.trim((fzf_opts.prompt or "Select"):gsub("%s*:%s*$", "")) .. " ",
               title_pos = "center",
+              backdrop = 100,
             },
           }, fzf_opts.kind == "codeaction" and {
             winopts = {
@@ -120,6 +122,7 @@ return {
           preview = {
             scrollchars = { "┃", "" },
           },
+          backdrop = 100,
         },
         files = {
           cwd_prompt = false,
@@ -143,6 +146,7 @@ return {
               return s:lower() .. "\t"
             end,
             child_prefix = false,
+            previewer = "bat",
           },
           code_actions = {
             previewer = vim.fn.executable("delta") == 1 and "codeaction_native" or nil,

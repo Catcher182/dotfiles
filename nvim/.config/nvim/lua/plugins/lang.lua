@@ -65,6 +65,18 @@ return {
       vim.g.mkdp_page_title = "${name}"
     end,
   },
+  {
+    "MeanderingProgrammer/render-markdown.nvim",
+    ft = { "markdown", "norg", "rmd", "org", "Avante", "codecompanion" },
+    opts = function()
+      vim.api.nvim_set_hl(0, "RenderMarkdownBullet", { bg = "NONE" })
+      return {
+        bullet = {
+          icons = { "●", "◉", "◆", "◇" },
+        },
+      }
+    end,
+  },
 
   -- leetcode
   {
@@ -149,6 +161,10 @@ return {
   },
   {
     "Jezda1337/nvim-html-css",
+    ft = {
+      "html",
+      "css",
+    },
     dependencies = {
       "nvim-treesitter/nvim-treesitter",
       "nvim-lua/plenary.nvim",
@@ -200,5 +216,51 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     opts = { ensure_installed = { "css", "java", "qmldir", "qmljs" } },
+  },
+  {
+    "epwalsh/obsidian.nvim",
+    version = "*", -- recommended, use latest release instead of latest commit
+    lazy = true,
+    -- ft = "markdown",
+    event = {
+      "BufReadPre " .. vim.fn.expand("~") .. "/Documents/Obsidian/*.md",
+      "BufNewFile " .. vim.fn.expand("~") .. "/Documents/Obsidian/*.md",
+    },
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+    },
+    opts = {
+      workspaces = {
+        {
+          name = "personal",
+          path = "~/Documents/Obsidian",
+        },
+      },
+      picker = {
+        -- Set your preferred picker. Can be one of 'telescope.nvim', 'fzf-lua', or 'mini.pick'.
+        name = "fzf-lua",
+      },
+      ui = { enable = false },
+      notes_subdir = "Notes",
+      note_id_func = function(title)
+        local suffix = ""
+        if title ~= nil then
+          -- If title is given, transform it into valid file name.
+          suffix = title:gsub(" ", "-")
+        else
+          -- If title is nil, just add 4 random uppercase letters to the suffix.
+          for _ = 1, 4 do
+            suffix = suffix .. string.char(math.random(65, 90))
+          end
+        end
+        return tostring(os.time()) .. "-" .. suffix
+      end,
+      daily_notes = {
+        folder = "Diary",
+      },
+      templates = {
+        folder = "Templates",
+      },
+    },
   },
 }

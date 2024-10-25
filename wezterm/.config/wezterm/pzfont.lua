@@ -8,7 +8,9 @@ local module = {}
 function module.apply_to_config(config)
 	config.font = wezterm.font_with_fallback({
 		-- { family = "MonaspaceRadonVar", weight = 600 },
-		{ family = "JetBrains Mono", weight = 500 },
+		-- { family = "Fira Code", weight = 500 },
+		{ family = "JetBrainsMono Nerd Font", weight = 500 },
+		-- { family = "JetBrains Mono", weight = 500 },
 		-- { family = "Source Code Pro", weight = 500 },
 		-- { family = "LXGWWenKai-Regular", weight = 500 },
 		{ family = "Noto Sans CJK SC", weight = 500 },

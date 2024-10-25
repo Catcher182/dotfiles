@@ -1,0 +1,7 @@
+/* ----全宽状态栏----------- */
+.status-bar {
+  position: sticky;
+  border-radius:0px;
+  border:none;
+  background-color:var(--background-secondary-alt) !important;
+}

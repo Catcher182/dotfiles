@@ -16,7 +16,6 @@ return {
         return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
       end
 
-      -- local luasnip = require("luasnip")
       local cmp = require("cmp")
 
       opts.mapping = vim.tbl_extend("force", opts.mapping, {
@@ -29,8 +28,8 @@ return {
             end)
           -- elseif has_words_before() then
           --   cmp.complete()
-          -- elseif require("fittencode").has_suggestions() then
-          --   require("fittencode").accept_all_suggestions()
+          elseif require("fittencode").has_suggestions() then
+            require("fittencode").accept_all_suggestions()
           else
             fallback()
           end
@@ -55,7 +54,6 @@ return {
         end,
         ["<C-d>"] = cmp.mapping.scroll_docs(-4),
       })
-
       -- `/` cmdline setup.
       cmp.setup.cmdline("/", {
         mapping = cmp.mapping.preset.cmdline({
@@ -88,102 +86,71 @@ return {
     end,
   },
   {
-    "luozhiya/fittencode.nvim",
-    lazy = false,
-    opts = {},
+    "nvimdev/lspsaga.nvim",
+    event = "LspAttach",
     keys = {
-      {
-        "<a-down>",
-        function()
-          if require("fittencode").has_suggestions() then
-            return require("fittencode").accept_all_suggestions()
-          end
-        end,
-        mode = { "i" },
+      { "<leader>va", "<Cmd>Lspsaga code_action<CR>", desc = "Code Action" },
+      { "<leader>vf", "<Cmd>Lspsaga finder<CR>", desc = "Lspsaga finder" },
+      { "<leader>vc", "<Cmd>Lspsaga incoming_calls<CR>", desc = "Lspsaga incoming_calls" },
+      { "<leader>vC", "<Cmd>Lspsaga outgoing_calls<CR>", desc = "Lspsaga outgoing_calls" },
+    },
+    opts = {
+      ui = {
+        border = "rounded",
+        devicon = true,
+        title = false,
+        button = { "", "" },
+        -- expand = "⊞",
+        expand = "⊠",
+        collapse = "⊟",
       },
-      { "<leader>a", "", desc = "+ai", mode = { "n", "v" } },
-      {
-        "<leader>aa",
-        "<cmd>Fitten toggle_chat<cr>",
-        desc = "Toggle (Fitten Chat)",
-        mode = { "n", "v" },
+      code_action = {
+        num_shortcut = true,
+        show_server_name = true,
+        extend_gitsigns = true,
       },
-      {
-        "<leader>ac",
-        "<cmd>Fitten start_chat<cr>",
-        desc = "Start Chat (Fitten)",
-        mode = { "n", "v" },
+      diagnostic = {
+        show_code_action = true,
       },
-      {
-        "<leader>ae",
-        "<cmd>Fitten explain_code<cr>",
-        desc = "Explain Code (Fitten)",
-        mode = { "v" },
+      lightbulb = {
+        enable = true,
+        sign = true,
+        virtual_text = false,
+        enable_in_insert = true,
       },
-      {
-        "<leader>af",
-        "<cmd>Fitten find_bugs<cr>",
-        desc = "Find Bugs (Fitten)",
-        mode = { "v" },
+      finder = {
+        default = "def+ref+imp",
+        left_width = 0.3,
+        right_width = 0.4,
+        keys = {
+          shuttle = "[w",
+          toggle_or_open = "o",
+          vsplit = "s",
+          split = "i",
+          tabe = "t",
+          tabnew = "r",
+          quit = "q",
+          close = "<C-c>k",
+        },
       },
-      {
-        "<leader>am",
-        "<cmd>Fitten document_code<cr>",
-        desc = "Document Code (Fitten)",
-        mode = { "v" },
+      symbol_in_winbar = {
+        enable = false,
       },
-      {
-        "<leader>ai",
-        "<cmd>Fitten implement_features<cr>",
-        desc = "Implement Features (Fitten)",
-        mode = { "v" },
-      },
-      {
-        "<leader>ao",
-        "<cmd>Fitten optimize_code<cr>",
-        desc = "Optimize Code (Fitten)",
-        mode = { "v" },
-      },
-      {
-        "<leader>ar",
-        "<cmd>Fitten refactor_code<cr>",
-        desc = "Refactor Code (Fitten)",
-        mode = { "v" },
-      },
-      {
-        "<leader>ad",
-        "<cmd>Fitten analyze_data<cr>",
-        desc = "Analyze Data (Fitten)",
-        mode = { "v" },
-      },
-      {
-        "<leader>agc",
-        "<cmd>Fitten generate_code<CR>",
-        desc = "Generate Code (Fitten)",
-        mode = { "n", "v" },
-      },
-      {
-        "<leader>agt",
-        ":Fitten generate_unit_test",
-        desc = "Generate Unit Test (Fitten)",
-        mode = { "v" },
-      },
-      {
-        "<leader>atc",
-        "<cmd>Fitten translate_text_into_chinese<cr>",
-        desc = "Translate Text into Chinese (Fitten)",
-        mode = { "v" },
-      },
-      {
-        "<leader>ate",
-        "<cmd>Fitten translate_text_into_english<cr>",
-        desc = "Translate Text into English (Fitten)",
-        mode = { "v" },
+      implement = {
+        enable = false,
+        sign = true,
+        virtual_text = false,
+        priority = 100,
       },
     },
   },
   {
+    "numToStr/Comment.nvim",
+    opts = {},
+  },
+  {
     "sindrets/diffview.nvim",
+    event = "VeryLazy",
     opts = {},
   },
   {
@@ -196,29 +163,36 @@ return {
     },
   },
   {
-    "jiaoshijie/undotree",
-    dependencies = "nvim-lua/plenary.nvim",
-    config = true,
-    keys = { -- load the plugin only when using it's keybinding:
-      { "<leader>un", "<cmd>lua require('undotree').toggle()<cr>", desc = "undotree" },
+    "simnalamburt/vim-mundo",
+    keys = {
+      { "<leader>vu", "<cmd>MundoToggle<cr>", desc = "undotree" },
     },
+  },
+  {
+    "stevearc/conform.nvim",
     opts = {
-      float_diff = true, -- using float window previews diff, set this `true` will disable layout option
-      layout = "left_bottom", -- "left_bottom", "left_left_bottom"
-      position = "left", -- "right", "bottom"
-      ignore_filetype = { "undotree", "undotreeDiff", "qf", "TelescopePrompt", "spectre_panel", "tsplayground" },
-      window = {
-        winblend = 30,
+      formatters_by_ft = {
+        lua = { "stylua" },
+        fish = { "fish_indent" },
+        sh = { "shfmt" },
+        html = { "prettier" },
+        css = { "prettier" },
+        js = { "prettier" },
+        vue = { "prettier" },
+        ts = { "prettier" },
+        json = { "prettier" },
+        yaml = { "prettier" },
+        cpp = { "clang-format" },
+        c = { "clang-format" },
       },
-      keymaps = {
-        ["j"] = "move_next",
-        ["k"] = "move_prev",
-        ["gj"] = "move2parent",
-        ["J"] = "move_change_next",
-        ["K"] = "move_change_prev",
-        ["<cr>"] = "action_enter",
-        ["p"] = "enter_diffbuf",
-        ["q"] = "quit",
+    },
+  },
+  {
+    "mfussenegger/nvim-lint",
+    optional = true,
+    opts = {
+      linters_by_ft = {
+        html = { "markuplint" },
       },
     },
   },

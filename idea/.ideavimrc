@@ -22,6 +22,9 @@ set which-key
 
 
 let mapleader=" "
+
+inoremap jj <Esc>
+
 nnoremap H ^
 nnoremap L $
 nnoremap zz za

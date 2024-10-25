@@ -40,6 +40,7 @@
 window#waybar > box {
   margin: 0px 0px 0px 0px;
   background-color: @color16;
+  border-radius: 2px;
 }
 
 /* left */
@@ -65,9 +66,14 @@ window#waybar > box {
   background-color: transparent;
   border-radius: 2px;
   padding-left: 6px;
-  padding-right: 0px;
-  margin: 3px 1px 3px 0px;
+  padding-right: 2px;
+  margin: 3px 0px;
   font-weight: bold;
+
+  background-color: @color1;
+  padding-left: 3px;
+  padding-right: 3px;
+  margin: 3px 1px;
 }
 
 #custom-splitline {
@@ -153,8 +159,9 @@ window#waybar > box {
   padding-right: 6px;
   font-weight: bold;
   /* font-size: 13px; */
-  /* font-family: "LXGWNeoXiHei"; */
-  font-family: "monospace";
+  /* font-family: "monospace"; */
+  /* font-family: "MonaspaceRadonVar,XiaolaiMonoSC"; */
+  font-family: "LXGWWenKai-Regular";
   color: @color0;
   border-radius: 2px;
 }
@@ -191,15 +198,13 @@ window#waybar.fullscreen > box {
 #myright {
   color: @color0;
   border-radius: 2px;
-  padding-left: 3px;
-  padding-right: 3px;
+  /* padding-left: 3px; */
+  /* padding-right: 3px; */
   background-color: transparent;
 }
 
 #myrightend {
   border-radius: 2px;
-  padding-left: 3px;
-  padding-right: 3px;
   background-color: transparent;
 }
 
@@ -269,10 +274,18 @@ window#waybar.fullscreen > box {
   box-shadow: inset 0px -16px 6px -12px orange;
 }
 
+#tray {
+  padding: 0px 5px;
+  margin: 3px 3px;
+  background-color: @color1;
+}
+
 #tray menu {
   margin-bottom: 4px;
   margin-top: 4px;
   padding: 4px;
+  font-size: 13px;
+  font-family: "XiaolaiMonoSC";
 }
 
 #tray menu menuitem {
@@ -332,19 +345,9 @@ label {
   background-color: white;
 }
 
-/* ============================== */
-/*
-#myrightend {
+#tray {
   margin-right: 3px;
 }
 #custom-spaceleft {
   margin-left: 3px;
-}
-*/
-
-#myrightend {
-  margin-right: -2px;
-}
-#custom-spaceleft {
-  margin-left: -2px;
 }

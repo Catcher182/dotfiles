@@ -1,34 +1,5 @@
 return {
   {
-    "olimorris/onedarkpro.nvim",
-    opts = function()
-      return {
-        styles = { -- For example, to apply bold and italic, use "bold,italic"
-          types = "NONE", -- Style that is applied to types
-          methods = "NONE", -- Style that is applied to methods
-          numbers = "NONE", -- Style that is applied to numbers
-          strings = "NONE", -- Style that is applied to strings
-          comments = "italic", -- Style that is applied to comments
-          keywords = "NONE", -- Style that is applied to keywords
-          constants = "NONE", -- Style that is applied to constants
-          functions = "NONE", -- Style that is applied to functions
-          operators = "NONE", -- Style that is applied to operators
-          variables = "NONE", -- Style that is applied to variables
-          parameters = "NONE", -- Style that is applied to parameters
-          conditionals = "NONE", -- Style that is applied to conditionals
-          virtual_text = "NONE", -- Style that is applied to virtual text
-        },
-        options = {
-          cursorline = false, -- Use cursorline highlighting?
-          transparency = false, -- Use a transparent background?
-          terminal_colors = true, -- Use the theme's colors for Neovim's :terminal?
-          lualine_transparency = true, -- Center bar transparency?
-          highlight_inactive_windows = false, -- When the window is out of focus, change the normal background?
-        },
-      }
-    end,
-  },
-  {
     "catppuccin/nvim",
     name = "catppuccin",
     opts = function()
@@ -65,7 +36,7 @@ return {
       return {
         -- your configuration comes here
         -- or leave it empty to use the default settings
-        transparent = true, -- Enable this to disable setting the background color
+        transparent = false, -- Enable this to disable setting the background color
         terminal_colors = true, -- Configure the colors used when opening a `:terminal` in Neovim
         diff = { mode = "bg" }, -- enables/disables colorful backgrounds when used in diff mode. values : [bg|fg]
         borders = true, -- Enable the border between verticaly split windows visible
@@ -93,47 +64,36 @@ return {
   {
     "sainnhe/edge",
     opts = function()
-      vim.cmd([[
-        let g:edge_style = 'aura'
-        let g:edge_enable_italic=1
-        let g:edge_transparent_background=2
-        let g:edge_disable_terminal_colors=1
-      ]])
+      vim.g.edge_style = "aura"
+      vim.g.edge_enable_italic = 1
+      vim.g.edge_transparent_background = 0
+      vim.g.edge_disable_terminal_colors = 1
     end,
   },
   {
     "Mofiqul/vscode.nvim",
     opts = function()
       local c = require("vscode.colors").get_colors()
-
       return {
-        -- Alternatively set style in setup
         -- style = "light",
-
-        -- Enable transparent background
-        transparent = true,
-
-        -- Enable italic comment
+        transparent = false,
         italic_comments = true,
-
-        -- Underline `@markup.link.*` variants
         underline_links = true,
-
-        -- Disable nvim-tree background color
         disable_nvimtree_bg = true,
-
-        -- Override colors (see ./lua/vscode/colors.lua)
         color_overrides = {
-          -- vscLineNumber = "#FFFFFF",
           vscTabCurrent = "#2196F3",
           vscPopupHighlightBlue = "#039BE5",
         },
-
-        -- Override highlight groups (see ./lua/vscode/theme.lua)
         group_overrides = {
-          -- this supports the same val table as vim.api.nvim_set_hl
-          -- use colors from this colorscheme by requiring vscode.colors!
           Cursor = { fg = c.vscDarkBlue, bg = c.vscLightGreen, bold = true },
+          NeoTreeDimText = { bg = c.vscNone },
+          NeoTreeExpander = { fg = c.vscLineNumber, bg = c.vscNone },
+          NeoTreeIndentMarker = { fg = c.vscLineNumber, bg = c.vscNone },
+          LineNr = { bg = c.vscNone },
+          Conceal = { bg = c.vscNone },
+          Directory = { bg = c.vscNone },
+          FloatBorder = { bg = c.vscNone },
+          FloatTitle = { bg = c.vscPopupBack },
         },
       }
     end,

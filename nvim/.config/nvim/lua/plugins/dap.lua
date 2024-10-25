@@ -2,8 +2,22 @@ return {
   {
     "mfussenegger/nvim-dap",
     optional = true,
+    keys = {
+      {
+        "<leader>dc",
+        function()
+          vim.fn.sign_define(
+            "DapStopped",
+            { text = "󰁕 ", texthl = "DiagnosticWarn", linehl = "DapStoppedLine", numhl = "" }
+          )
+          require("dap").continue()
+        end,
+        desc = "Continue",
+      },
+    },
     opts = function()
       local dap = require("dap")
+
       dap.defaults.fallback.external_terminal = {
         command = "/usr/bin/wezterm",
         args = { "-e" },

@@ -11,9 +11,13 @@ preview docxpandoc .docx {{
     pandoc -s -t markdown "$f" | tee
 }}
 
-# set chafasixel
+set chafasixel
 
-preview any_image image/* {{
-    # this one applies to all text files
+#preview any_image image/* {{
+#    chafa -f sixel --animate off --polite on "$f" -s "${w}x${h}"
+#}}
+
+
+preview gifp .gif {{
     chafa -f sixel --animate off --polite on "$f" -s "${w}x${h}"
 }}

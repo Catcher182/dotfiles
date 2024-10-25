@@ -1,18 +1,20 @@
 {
     "layer": "top",
 
-    "position": "bottom",
-    "height": 30,
+    "position": "top",
+    "height": 28,
+    //"width":1912,
+    "margin":"4 4 0 4",
 
     "modules-left": [
         "custom/spaceleft",
         "custom/splitline",
         "hyprland/submap",
         "hyprland/workspaces",
-        "custom/splitline",
+        //"custom/splitline",
         "mpd",
         "mpris",
-        "wlr/taskbar",
+        //"wlr/taskbar",
         "hyprland/window"
     ],
     "modules-center": [
@@ -41,9 +43,9 @@
     "group/myrightend": {
         "orientation": "inherit",
         "modules": [
-            "tray",
+            "custom/notification",
             "idle_inhibitor",
-            "custom/notification"
+            "tray"
         ]
     },
 
@@ -101,6 +103,21 @@
         ]
     },
 
+    "wlr/workspaces": {
+      "format": "{icon}",
+      "on-click": "activate",
+      "format-icons": {
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "",
+        "5": "",
+        "urgent": "",
+        "active": "",
+        "default": ""
+      },
+      "sort-by-number": true
+    },
 
 
     "hyprland/window":{
@@ -160,7 +177,8 @@
     },
 
     "custom/spaceleft":{
-        "format": "Arch",
+        "format": "Start",
+        //"format": "⧗ ARCH",
         "on-click": "rofi -show drun -theme ~/.config/rofi/themes/launcher.rasi",
         "on-click-right": "rofi -show window",
         "tooltip":false
@@ -214,12 +232,11 @@
             "weeks-pos"     : "left",
             "on-scroll"     : 1,
             "format": {
-                "months":     "<span color='#ffdd33'><b>{}</b></span>",
+                "months":     "<span color='#FF6D00'><b>{}</b></span>",
                 "days":       "<span><b>{}</b></span>",
-                // "days":       "<span color='#ffdd33'><b>{}</b></span>",
-                "weeks":      "<span color='#99fb2d'><b>W{}</b></span>",
+                "weeks":      "<span color='#7E57C2'><b>W{}</b></span>",
                 "weekdays":   "<span color='#ffcc66'><b></b></span>",
-                "today":      "<span color='#99fb2d'><b><u>{}</u></b></span>"
+                "today":      "<span color='#7E57C2'><b><u>{}</u></b></span>"
             }
         },
         "actions":  {
