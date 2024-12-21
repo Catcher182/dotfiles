@@ -89,13 +89,13 @@ window#waybar > box {
   /* box-shadow: inset 0px -12px 12px -6px @color1; */
 }
 #workspaces button {
-  min-width: 20px;
+  min-width: 18px;
   font-family: "monospace";
   font-size: 13px;
   font-weight: bold;
   color: @color0;
   border-radius: 2px;
-  margin: 2px 2px;
+  margin: 3px 2px;
 }
 
 #workspaces button.active {

@@ -1,6 +1,7 @@
 return {
   {
     "luozhiya/fittencode.nvim",
+    -- enabled = false,
     event = "VeryLazy",
     opts = {},
     keys = {
@@ -56,15 +57,15 @@ return {
       adapters = {
         openai = function()
           return require("codecompanion.adapters").extend("openai", {
-            -- url = "https://api.gptgod.online/v1/chat/completions",
-            url = "https://api.moonshot.cn/v1/chat/completions",
+            url = "https://api.gptgod.online/v1/chat/completions",
+            -- url = "https://api.moonshot.cn/v1/chat/completions",
             env = {
               api_key = "OPENAI_API_KEY",
             },
             schema = {
               model = {
-                default = "moonshot-v1-8k",
-                -- default = "gpt-4o-mini",
+                -- default = "moonshot-v1-8k",
+                default = "gpt-4o-mini",
                 choices = {
                   "gpt-4o-mini",
                   "gpt-3.5-turbo",

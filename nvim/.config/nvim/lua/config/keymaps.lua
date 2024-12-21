@@ -1,7 +1,8 @@
 -- Keymaps are automatically loaded on the VeryLazy event
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 -- Add any additional keymaps here
-vim.keymap.set("i", "jj", "<ESC>")
+vim.keymap.set("n", "<leader>qw", "<cmd>w<cr>", { desc = "Save" })
+vim.keymap.set("n", "<leader>qW", "<cmd>wq<cr>", { desc = "Save and quit" })
 vim.keymap.set("n", "H", "^")
 vim.keymap.set("n", "L", "$")
 vim.keymap.set("n", "<leader>v", "", { desc = "Peek/Misc" })
@@ -26,19 +27,42 @@ vim.keymap.set("n", "<leader>uB", function()
     vim.opt.background = "dark"
   end
 end, { desc = "BackgroundToggle" })
+
+vim.keymap.set("n", "<leader>ft", "", { desc = "ToggleTerm" })
 vim.keymap.set(
   "n",
-  "<leader>th",
+  "<leader>fth",
   "<cmd>1ToggleTerm size=10 direction=horizontal name=horizontal<cr>",
   { desc = "ToggleTerm horizontal split" }
 )
 vim.keymap.set(
   "n",
-  "<leader>tv",
+  "<leader>ftv",
   "<cmd>2ToggleTerm size=38 direction=vertical name=vertical<cr>",
   { desc = "ToggleTerm vertical split" }
 )
-vim.keymap.set("n", "<leader>tf", "<cmd>3ToggleTerm direction=float name=float<cr>", { desc = "ToggleTerm float" })
+vim.keymap.set("n", "<leader>ftf", "<cmd>3ToggleTerm direction=float name=float<cr>", { desc = "ToggleTerm float" })
+
+vim.keymap.set("n", "<leader>fT", "", { desc = "ToggleTerm (Root Dir)" })
+vim.keymap.set(
+  "n",
+  "<leader>fTh",
+  "<cmd>4ToggleTerm size=10 dir=" .. LazyVim.root() .. " direction=horizontal name=horizontalRoot<cr>",
+  { desc = "ToggleTerm horizontal split (Root Dir)" }
+)
+vim.keymap.set(
+  "n",
+  "<leader>fTv",
+  "<cmd>5ToggleTerm size=38 dir=" .. LazyVim.root() .. " direction=vertical name=verticalRoot<cr>",
+  { desc = "ToggleTerm vertical split (Root Dir)" }
+)
+vim.keymap.set(
+  "n",
+  "<leader>fTf",
+  "<cmd>6ToggleTerm dir=" .. LazyVim.root() .. " direction=float name=floatRoot<cr>",
+  { desc = "ToggleTerm float (Root Dir)" }
+)
+
 -- vim.keymap.del("n", "<C-/>")
 vim.keymap.set("n", "<C-/>", "<cmd>ToggleTermToggleAll<cr>", { desc = "ToggleTerm" })
 

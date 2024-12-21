@@ -110,3 +110,103 @@ pimage (){
     chafa "$1"
   fi
 }
+
+pcolor() {
+  if [ -n "$1" ]; then
+    pastel color $1
+  else
+    if [ $XDG_SESSION_TYPE = "wayland" ]; then
+      res=$(echo -en $(wl-paste) | pastel color 2>/dev/null)
+      if [ -n "$res" ]; then
+        echo -en $(wl-paste) | pastel color 2>/dev/null
+      else
+        pcolorpick
+      fi
+    else
+      res=$(echo -en $(xclip -o -selection clipboard) | pastel color 2>/dev/null)
+      if [ -n "$res" ]; then
+        echo -en $(xclip -o -selection clipboard) | pastel color 2>/dev/null
+      else
+        pcolorpick
+      fi
+    fi
+  fi
+}
+pcolorpick() {
+  if [ $XDG_SESSION_TYPE = "wayland" ]; then
+    pastel --color-picker hyprpicker pick | pastel format hex | tr -d '\n' | wl-copy
+    echo -en $(wl-paste) | pastel color 2>/dev/null
+  else
+    pastel --color-picker gpick pick | pastel format hex | tr -d '\n' | xclip -i -selection clipboard
+    echo -en $(wl-paste) | pastel color 2>/dev/null
+  fi
+}
+pcolorpickrgb() {
+  if [ $XDG_SESSION_TYPE = "wayland" ]; then
+    pastel --color-picker hyprpicker pick | pastel format rgb | tr -d '\n' | wl-copy
+    echo -en $(wl-paste) | pastel color 2>/dev/null
+  else
+    pastel --color-picker gpick pick | pastel format rgb | tr -d '\n' | xclip -i -selection clipboard
+    echo -en $(wl-paste) | pastel color 2>/dev/null
+  fi
+}
+pcolorpickhsl() {
+  if [ $XDG_SESSION_TYPE = "wayland" ]; then
+    pastel --color-picker hyprpicker pick | pastel format hsl | tr -d '\n' | wl-copy
+    echo -en $(wl-paste) | pastel color 2>/dev/null
+  else
+    pastel --color-picker gpick pick | pastel format hsl | tr -d '\n' | xclip -i -selection clipboard
+    echo -en $(wl-paste) | pastel color 2>/dev/null
+  fi
+}
+pcolorto() {
+  local toformat="hex"
+  if [ -n "$1" ]; then
+    if [[ "$1" == "hex" || "$1" == "rgb" || "$1" == "hsl" ]]; then
+      toformat="$1"
+      if [ -n "$2" ]; then
+        pastel color "$2"
+        if [ "$XDG_SESSION_TYPE" = "wayland" ]; then
+          pastel format "$toformat" "$2" | tr -d '\n' | wl-copy
+        else
+          pastel format "$toformat" "$2" | tr -d '\n' | xclip -i -selection clipboard >/dev/null
+        fi
+      else
+        if [ "$XDG_SESSION_TYPE" = "wayland" ]; then
+          local res=$(echo -en "$(wl-paste)" | pastel color 2>/dev/null)
+          if [ -n "$res" ]; then
+            echo -en "$(wl-paste)" | pastel color 2>/dev/null
+            echo -en "$(wl-paste)" | pastel format "$toformat" | tr -d '\n' | wl-copy
+          fi
+        else
+          local res=$(echo -en "$(xclip -o -selection clipboard)" | pastel color 2>/dev/null)
+          if [ -n "$res" ]; then
+            echo -en "$(xclip -o -selection clipboard)" | pastel color 2>/dev/null
+            echo -en "$(xclip -o -selection clipboard)" | pastel format "$toformat" | tr -d '\n' | xclip -i -selection clipboard >/dev/null
+          fi
+        fi
+      fi
+    else
+      pastel color "$1"
+      if [ "$XDG_SESSION_TYPE" = "wayland" ]; then
+        pastel format "$toformat" "$1" | tr -d '\n' | wl-copy
+      else
+        pastel format "$toformat" "$1" | tr -d '\n' | xclip -i -selection clipboard >/dev/null
+      fi
+    fi
+  else
+    if [ "$XDG_SESSION_TYPE" = "wayland" ]; then
+      local res=$(echo -en "$(wl-paste)" | pastel color 2>/dev/null)
+      if [ -n "$res" ]; then
+        echo -en "$(wl-paste)" | pastel color 2>/dev/null
+        echo -en "$(wl-paste)" | pastel format "$toformat" | tr -d '\n' | wl-copy
+      fi
+    else
+      local res=$(echo -en "$(xclip -o -selection clipboard)" | pastel color 2>/dev/null)
+      if [ -n "$res" ]; then
+        echo -en "$(xclip -o -selection clipboard)" | pastel color 2>/dev/null
+        echo -en "$(xclip -o -selection clipboard)" | pastel format "$toformat" | tr -d '\n' | xclip -i -selection clipboard >/dev/null
+      fi
+    fi
+  fi
+}

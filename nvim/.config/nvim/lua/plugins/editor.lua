@@ -167,27 +167,16 @@ return {
     end,
   },
   {
-    "potamides/pantran.nvim",
+    "voldikss/vim-translator",
     keys = {
-      { "mm", ":Pantran mode=hover target=zh<cr>", mode = { "n", "v" }, desc = "Translate" },
-      { "mr", ":Pantran mode=replace target=zh<cr>", mode = { "n", "v" }, desc = "Translate and Replace" },
+      { "mm", "<Plug>TranslateW", mode = { "n" }, desc = "Translate" },
+      { "mm", "<Plug>TranslateWV", mode = { "v" }, desc = "Translate" },
+      { "mr", "<Plug>TranslateR", mode = { "n" }, desc = "Translate and Replace" },
+      { "mr", "<Plug>TranslateRV", mode = { "v" }, desc = "Translate and Replace" },
     },
-    opts = {
-      command = {
-        default_mode = "hover",
-      },
-      default_engine = "google",
-      engines = {
-        google = {
-          default_source = "auto",
-          default_target = "zh",
-          fallback = {
-            default_source = "auto",
-            default_target = "zh",
-          },
-        },
-      },
-    },
+    config = function()
+      vim.g.translator_default_engines = { "bing", "google", "haici" }
+    end,
   },
   {
     "stevearc/overseer.nvim",
@@ -268,54 +257,6 @@ return {
       -- 'statusline-winbar' | 'floating-big-letter'
       hint = "statusline-winbar",
       selection_chars = "FJDKSLA;CMRUEIWOQP",
-    },
-  },
-  {
-    "kevinhwang91/nvim-bqf",
-    ft = "qf",
-    dependencies = {
-      "junegunn/fzf",
-    },
-    opts = {
-      auto_enable = true,
-      auto_resize_height = true, -- highly recommended enable
-      preview = {
-        win_height = 12,
-        win_vheight = 12,
-        delay_syntax = 80,
-        border = { "┏", "━", "┓", "┃", "┛", "━", "┗", "┃" },
-        show_title = false,
-        should_preview_cb = function(bufnr, qwinid)
-          local ret = true
-          local bufname = vim.api.nvim_buf_get_name(bufnr)
-          local fsize = vim.fn.getfsize(bufname)
-          if fsize > 100 * 1024 then
-            -- skip file size greater than 100k
-            ret = false
-          elseif bufname:match("^fugitive://") then
-            -- skip fugitive buffer
-            ret = false
-          end
-          return ret
-        end,
-      },
-      -- make `drop` and `tab drop` to become preferred
-      func_map = {
-        drop = "o",
-        openc = "O",
-        split = "<C-s>",
-        tabdrop = "<C-t>",
-        -- set to empty string to disable
-        tabc = "",
-        ptogglemode = "z,",
-        fzffilter = "zF",
-      },
-      filter = {
-        fzf = {
-          action_for = { ["ctrl-s"] = "split", ["ctrl-t"] = "tab drop" },
-          extra_opts = { "--bind", "ctrl-o:toggle-all", "--prompt", "> " },
-        },
-      },
     },
   },
   {

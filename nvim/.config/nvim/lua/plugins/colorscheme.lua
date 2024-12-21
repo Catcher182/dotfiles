@@ -94,6 +94,7 @@ return {
           Directory = { bg = c.vscNone },
           FloatBorder = { bg = c.vscNone },
           FloatTitle = { bg = c.vscPopupBack },
+          NoiceSplit = { bg = c.vscBack },
         },
       }
     end,

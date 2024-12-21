@@ -12,8 +12,8 @@ setopt clobber
 
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 
-# export OPENAI_API_KEY="$(cat ~/.config/.gp-nvim)"
-export OPENAI_API_KEY="$(cat ~/.config/.codecompanion-nvim)"
+export OPENAI_API_KEY="$(cat ~/.config/.gp-nvim)"
+# export OPENAI_API_KEY="$(cat ~/.config/.codecompanion-nvim)"
 
 # Import colorscheme from 'wal' asynchronously
 # &   # Run the process in the background.
@@ -57,6 +57,8 @@ export PATH="$PATH:/home/dawn/.dotnet/tools"
 eval "$(direnv hook zsh)"
 
 # fzf
+source <(fzf --zsh)
+
 export FZF_DEFAULT_COMMAND='fd'
 export FZF_COMPLETION_TRIGGER='\'
 export FZF_TMUX=1
@@ -74,10 +76,7 @@ export FZF_DEFAULT_OPTS='
 zstyle ':fzf-tab:complete:_zlua:*' query-string input
 zstyle ':fzf-tab:*' fzf-flags $(echo $FZF_DEFAULT_OPTS)
 
-# zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath' # remember to use single quote here!!!
 zstyle ':fzf-tab:complete:systemctl-*:*' fzf-preview 'SYSTEMD_COLORS=1 systemctl status $word'
-# zstyle ':fzf-tab:complete:(-command-|-parameter-|-brace-parameter-|export|unset|expand):*' \
-# 	fzf-preview 'echo ${(P)word}'
 zstyle ':fzf-tab:complete:git-(add|diff|restore):*' fzf-preview \
 	'git diff $word | delta'
 zstyle ':fzf-tab:complete:git-log:*' fzf-preview \

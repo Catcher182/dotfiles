@@ -1,6 +1,47 @@
 return {
-  { "folke/noice.nvim", enabled = false },
-  { "rcarriga/nvim-notify", enabled = false },
+  {
+    "folke/noice.nvim",
+    enabled = false,
+  },
+  {
+    "folke/snacks.nvim",
+    opts = {
+      win = {
+        backdrop = false,
+      },
+
+      dashboard = {
+        preset = {
+          header = [[
+███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗
+████╗  ██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║
+██╔██╗ ██║█████╗  ██║   ██║██║   ██║██║██╔████╔██║
+██║╚██╗██║██╔══╝  ██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║
+██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║
+╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝]],
+        },
+        sections = {
+          { section = "header" },
+          { section = "keys", gap = 1, padding = 1 },
+          -- { section = "startup" },
+        },
+      },
+
+      statuscolumn = {
+        left = { "sign", "mark" }, -- priority of signs on the left (high to low)
+        right = { "fold", "git" }, -- priority of signs on the right (high to low)
+        folds = {
+          open = true, -- show open fold icons
+          git_hl = true, -- use Git Signs hl for fold icons
+        },
+        git = {
+          -- patterns to match Git signs
+          patterns = { "GitSign", "MiniDiffSign" },
+        },
+        refresh = 50, -- refresh at most every 50ms
+      },
+    },
+  },
   {
     "akinsho/bufferline.nvim",
     opts = {
@@ -115,7 +156,7 @@ return {
           "nvim-dap-ui",
           "overseer",
           "quickfix",
-          "toggleterm",
+          -- "toggleterm",
           "trouble",
         },
       }
@@ -124,9 +165,6 @@ return {
   },
   {
     "Bekaboo/dropbar.nvim",
-    dependencies = {
-      "nvim-telescope/telescope-fzf-native.nvim",
-    },
     opts = function()
       return {}
     end,
@@ -229,51 +267,6 @@ return {
   },
   {
     "HiPhish/rainbow-delimiters.nvim",
-  },
-  {
-    "luukvbaal/statuscol.nvim",
-    opts = function()
-      local builtin = require("statuscol.builtin")
-      local cfg = {
-        setopt = true,
-        thousands = false, -- or line number thousands separator string ("." / ",")
-        relculright = true, -- whether to right-align the cursor line number with 'relativenumber' set
-        -- Builtin 'statuscolumn' options
-        ft_ignore = {
-          "man",
-          "help",
-          "neo-tree",
-          "TelescopePrompt",
-          "Trouble",
-          "dapui_watches",
-          "dap-repl",
-          "dapui_console",
-          "dapui_stacks",
-          "dapui_breakpoints",
-          "dapui_scopes",
-          "Overseer*",
-          "Outline",
-          "undotree",
-          "Mundo",
-          "MundoDiff",
-          "leetcode.nvim",
-          "toggleterm",
-          "grug-far",
-        },
-        bt_ignore = { "prompt" },
-        -- Default segments (fold -> sign -> line number + separator), explained below
-        segments = {
-          { text = { "%s" }, click = "v:lua.ScSa" },
-          {
-            text = { builtin.lnumfunc, " " },
-            condition = { true, builtin.not_empty },
-            click = "v:lua.ScLa",
-          },
-          { text = { builtin.foldfunc, " " }, click = "v:lua.ScFa" },
-        },
-      }
-      return cfg
-    end,
   },
   {
     "kevinhwang91/nvim-ufo",
@@ -509,66 +502,6 @@ return {
         use_trouble_qf = false, -- Quickfix action will open trouble.nvim instead of built-in quickfix list window
       }
     end,
-  },
-  {
-    "j-hui/fidget.nvim",
-    opts = {
-      progress = {
-        poll_rate = 0, -- How and when to poll for progress messages
-        suppress_on_insert = false, -- Suppress new messages while in insert mode
-        ignore_done_already = false, -- Ignore new tasks that are already complete
-        ignore_empty_message = false, -- Ignore new tasks that don't contain a message
-        ignore = {}, -- List of LSP servers to ignore
-
-        -- Options related to how LSP progress messages are displayed as notifications
-        display = {
-          render_limit = 16, -- How many LSP messages to show at once
-          done_ttl = 3, -- How long a message should persist after completion
-          done_icon = "✔", -- Icon shown when all LSP progress tasks are complete
-          done_style = "Constant", -- Highlight group for completed LSP tasks
-          progress_ttl = math.huge, -- How long a message should persist when in progress
-          -- Icon shown when LSP progress tasks are in progress
-          progress_icon = { pattern = "dots", period = 1 },
-          -- Highlight group for in-progress LSP tasks
-          progress_style = "WarningMsg",
-          group_style = "Title", -- Highlight group for group name (LSP server name)
-          icon_style = "Question", -- Highlight group for group icons
-          priority = 30, -- Ordering priority for LSP notification group
-          skip_history = true, -- Whether progress notifications should be omitted from history
-        },
-      },
-
-      -- Options related to notification subsystem
-      notification = {
-        poll_rate = 10, -- How frequently to update and render notifications
-        filter = vim.log.levels.INFO, -- Minimum notifications level
-        history_size = 128, -- Number of removed messages to retain in history
-        override_vim_notify = false, -- Automatically override vim.notify() with Fidget
-
-        -- Options related to how notifications are rendered as text
-        view = {
-          stack_upwards = true, -- Display notification items from bottom to top
-          icon_separator = " ", -- Separator between group name and icon
-          group_separator = "---", -- Separator between notification groups
-          -- Highlight group used for group separator
-          group_separator_hl = "Comment",
-        },
-
-        -- Options related to the notification window and buffer
-        window = {
-          normal_hl = "Comment", -- Base highlight group in the notification window
-          winblend = 0, -- Background color opacity in the notification window
-          border = "none", -- Border around the notification window
-          zindex = 45, -- Stacking priority of the notification window
-          max_width = 0, -- Maximum width of the notification window
-          max_height = 0, -- Maximum height of the notification window
-          x_padding = 1, -- Padding from right edge of window boundary
-          y_padding = 0, -- Padding from bottom edge of window boundary
-          align = "bottom", -- How to align the notification window
-          relative = "editor", -- What the notification window position is relative to
-        },
-      },
-    },
   },
   {
     "kevinhwang91/nvim-hlslens",

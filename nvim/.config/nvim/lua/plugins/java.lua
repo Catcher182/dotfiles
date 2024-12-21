@@ -179,50 +179,12 @@ return {
     end,
   },
   {
-    "chaosystema/nvim-springtime",
-    lazy = true,
-    cmd = { "Springtime", "SpringtimeUpdate" },
-    dependencies = {
-      "chaosystema/nvim-popcorn",
-      "chaosystema/nvim-spinetta",
-      "hrsh7th/nvim-cmp",
-    },
-    build = function()
-      require("springtime.core").update()
-    end,
-    opts = {
-      -- Workspace is where the generated Spring project will be saved
-      workspace = {
-        -- Default where Neovim is open
-        path = vim.fn.expand("%:p:h"),
-
-        -- Spring Initializr generates a zip file
-        -- Decompress the file by default
-        decompress = true,
-
-        -- If after generation you want to open the folder
-        -- Opens the generated project in Neovim by default
-        open_auto = true,
-      },
-
-      -- This could be enabled for debugging purposes
-      -- Generates a springtime.log with debug and errors.
-      internal = {
-        log_debug = false,
-      },
-    },
-  },
-  {
     "hedyhli/outline.nvim",
     opts = {
       providers = {
-        priority = { "lsp", "coc", "markdown", "norg" },
         lsp = {
           -- Lsp client names to ignore
           blacklist_clients = { "spring-boot" },
-        },
-        markdown = {
-          filetypes = { "markdown" },
         },
       },
     },

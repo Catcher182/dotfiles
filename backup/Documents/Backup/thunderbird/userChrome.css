@@ -1,0 +1,66 @@
+.spaces-toolbar:not([hidden]) {
+  background-color: light-dark(#f8fdf7, #252525) !important;
+}
+
+.contentTabToolbar {
+  margin: 3px 0px 0px 0px !important;
+}
+
+#calSidebar {
+  min-width: 238px !important;
+}
+
+.minimonth-nav-item input {
+  width: 45px !important;
+}
+
+.minimonth-day {
+  border-radius: 2px !important;
+  padding: 5px 2px 0px 2px !important;
+}
+.minimonth-week {
+  padding: 5px 2px 0px 2px !important;
+}
+
+menupopup,
+panel,
+slot[part="content"] {
+  margin-top: 0px !important;
+  --panel-border-radius: 0px 0px 2px 2px !important;
+}
+#PopupGlodaAutocomplete > .autocomplete-richlistbox {
+  border-radius: 2px !important;
+}
+
+.search-icon {
+  margin-right: 6px !important;
+}
+
+.tabmail-tab {
+  margin: 0px 0px 3px 0px !important;
+  border-radius: 3px !important;
+}
+.tab-line {
+  height: 0px !important;
+}
+
+.titlebar-close {
+  & > .toolbarbutton-icon {
+    background-size: 55% 55% !important;
+  }
+}
+.titlebar-restore {
+  & > .toolbarbutton-icon {
+    background-size: 55% 55% !important;
+  }
+}
+.titlebar-max {
+  & > .toolbarbutton-icon {
+    background-size: 55% 55% !important;
+  }
+}
+.titlebar-min {
+  & > .toolbarbutton-icon {
+    background-size: 55% 55% !important;
+  }
+}

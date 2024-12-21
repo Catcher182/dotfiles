@@ -24,59 +24,39 @@ return {
       }
       -- dap.defaults.fallback.force_external_terminal = true
       -- dap.defaults.fallback.terminal_win_cmd = "50vsplit new"
-      if not dap.adapters["lldb"] then
-        require("dap").adapters["lldb"] = {
+      if not dap.adapters["local-lua"] then
+        require("dap").adapters["local-lua"] = {
           type = "executable",
-          command = "/usr/bin/lldb-dap", -- adjust as needed, must be absolute path
-          name = "lldb",
-        }
-      end
-      for _, lang in ipairs({ "c", "cpp" }) do
-        dap.configurations[lang] = {
-          {
-            name = "Launch",
-            type = "lldb",
-            request = "launch",
-            program = function()
-              return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
-            end,
-            cwd = "${workspaceFolder}",
-            stopOnEntry = false,
-            args = {},
-            -- runInTerminal = false,
+          command = "node",
+          args = {
+            "/usr/lib/node_modules/local-lua-debugger-vscode/extension/debugAdapter.js",
           },
+          enrich_config = function(config, on_config)
+            if not config["extensionPath"] then
+              local c = vim.deepcopy(config)
+              -- 💀 If this is missing or wrong you'll see
+              -- "module 'lldebugger' not found" errors in the dap-repl when trying to launch a debug session
+              c.extensionPath = "/usr/lib/node_modules/local-lua-debugger-vscode/"
+              on_config(c)
+            else
+              on_config(config)
+            end
+          end,
         }
       end
-      if not dap.adapters["bashdb"] then
-        require("dap").adapters["bashdb"] = {
-          type = "executable",
-          command = vim.fn.stdpath("data") .. "/mason/packages/bash-debug-adapter/bash-debug-adapter",
-          name = "bashdb",
-        }
-      end
-      for _, lang in ipairs({ "sh" }) do
-        dap.configurations[lang] = {
-          {
-            type = "bashdb",
-            request = "launch",
-            name = "Launch file",
-            showDebugOutput = true,
-            pathBashdb = vim.fn.stdpath("data") .. "/mason/packages/bash-debug-adapter/extension/bashdb_dir/bashdb",
-            pathBashdbLib = vim.fn.stdpath("data") .. "/mason/packages/bash-debug-adapter/extension/bashdb_dir",
-            trace = true,
+      dap.configurations.lua = {
+        {
+          name = "Current file (local-lua-dbg, lua)",
+          type = "local-lua",
+          request = "launch",
+          cwd = "${workspaceFolder}",
+          program = {
+            lua = "lua",
             file = "${file}",
-            program = "${file}",
-            cwd = "${workspaceFolder}",
-            pathCat = "cat",
-            pathBash = "/bin/bash",
-            pathMkfifo = "mkfifo",
-            pathPkill = "pkill",
-            args = {},
-            env = {},
-            terminalKind = "integrated",
           },
-        }
-      end
+          args = {},
+        },
+      }
     end,
   },
 }

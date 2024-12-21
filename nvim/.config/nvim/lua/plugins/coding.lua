@@ -28,8 +28,8 @@ return {
             end)
           -- elseif has_words_before() then
           --   cmp.complete()
-          elseif require("fittencode").has_suggestions() then
-            require("fittencode").accept_all_suggestions()
+          -- elseif require("fittencode").has_suggestions() then
+          --   require("fittencode").accept_all_suggestions()
           else
             fallback()
           end
@@ -89,7 +89,7 @@ return {
     "nvimdev/lspsaga.nvim",
     event = "LspAttach",
     keys = {
-      { "<leader>va", "<Cmd>Lspsaga code_action<CR>", desc = "Code Action" },
+      { "<leader>va", "<Cmd>Lspsaga code_action<CR>", desc = "Code Action", mode = { "n", "v" } },
       { "<leader>vf", "<Cmd>Lspsaga finder<CR>", desc = "Lspsaga finder" },
       { "<leader>vc", "<Cmd>Lspsaga incoming_calls<CR>", desc = "Lspsaga incoming_calls" },
       { "<leader>vC", "<Cmd>Lspsaga outgoing_calls<CR>", desc = "Lspsaga outgoing_calls" },
@@ -113,7 +113,7 @@ return {
         show_code_action = true,
       },
       lightbulb = {
-        enable = true,
+        enable = false,
         sign = true,
         virtual_text = false,
         enable_in_insert = true,

@@ -1,35 +1,11 @@
 return {
   {
     "ibhagwan/fzf-lua",
-    opts = function(_, opts)
-      local config = require("fzf-lua.config")
+    opts = function()
+      -- local config = require("fzf-lua.config")
       local actions = require("fzf-lua.actions")
 
-      local deltabg = "delta --side-by-side --width=$FZF_PREVIEW_COLUMNS --hunk-header-style='omit' --"
-        .. vim.o.background
-
-      -- Toggle root dir / cwd
-      config.defaults.actions.files["ctrl-r"] = function(_, ctx)
-        local o = vim.deepcopy(ctx.__call_opts)
-        o.root = o.root == false
-        o.cwd = nil
-        o.buf = ctx.__CTX.bufnr
-        LazyVim.pick.open(ctx.__INFO.cmd, o)
-      end
-      config.defaults.actions.files["alt-c"] = config.defaults.actions.files["ctrl-r"]
-      config.set_action_helpstr(config.defaults.actions.files["ctrl-r"], "toggle-root-dir")
-
-      -- use the same prompt for all
-      local defaults = require("fzf-lua.profiles.default-title")
-      local function fix(t)
-        t.prompt = t.prompt ~= nil and " " or nil
-        for _, v in pairs(t) do
-          if type(v) == "table" then
-            fix(v)
-          end
-        end
-      end
-      fix(defaults)
+      local deltabg = "delta --width=$FZF_PREVIEW_COLUMNS --hunk-header-style='omit' --" .. vim.o.background
 
       local img_previewer ---@type string[]?
       for _, v in ipairs({
@@ -43,7 +19,8 @@ return {
         end
       end
 
-      return vim.tbl_deep_extend("force", defaults, {
+      return {
+        "default-title",
         -- fzf_colors = true,
         fzf_colors = {
           ["fg"] = { "fg", "CursorLine" },
@@ -78,9 +55,6 @@ return {
             },
             ueberzug_scaler = "fit_contain",
           },
-          man = {
-            cmd = "man %s | col -bx",
-          },
         },
         -- Custom LazyVim option to configure vim.ui.select
         ui_select = function(fzf_opts, items)
@@ -89,7 +63,6 @@ return {
             winopts = {
               title = " " .. vim.trim((fzf_opts.prompt or "Select"):gsub("%s*:%s*$", "")) .. " ",
               title_pos = "center",
-              backdrop = 100,
             },
           }, fzf_opts.kind == "codeaction" and {
             winopts = {
@@ -153,7 +126,12 @@ return {
             preview_pager = deltabg,
           },
         },
-      })
+      }
     end,
+  },
+
+  {
+    "nvim-telescope/telescope.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
   },
 }
