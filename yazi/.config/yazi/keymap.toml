@@ -1,0 +1,81 @@
+# A TOML linter such as https://taplo.tamasfe.dev/ can use this schema to validate your config.
+# If you encounter any issues, please make an issue at https://github.com/yazi-rs/schemas.
+"$schema" = "https://yazi-rs.github.io/schemas/keymap.json"
+
+[mgr]
+
+# 手动添加或更改过的键位
+prepend_keymap = [
+
+	# Plugin
+  # =======================
+  # GVFS 相关操作
+  # =======================
+  # 挂载
+  { on = [ "M", "M" ], for = "unix", run = "plugin gvfs -- select-then-mount --jump", desc = "gvfs:Select device to mount and jump to its mount point" },
+  { on = [ "M", "R" ], for = "unix", run = "plugin gvfs -- remount-current-cwd-device", desc = "gvfs:Remount device under cwd" },
+  { on = [ "M", "u" ], for = "unix", run = "plugin gvfs -- select-then-unmount --eject", desc = "gvfs:Select device then eject" },
+  { on = [ "M", "U" ], for = "unix", run = "plugin gvfs -- select-then-unmount --eject --force", desc = "gvfs:Select device then force to eject/unmount" },
+  { on = [ "M", "a" ], for = "unix", run = "plugin gvfs -- add-mount", desc = "gvfs:Add a GVFS mount URI" },
+  { on = [ "M", "e" ], for = "unix", run = "plugin gvfs -- edit-mount", desc = "gvfs:Edit a GVFS mount URI" },
+  { on = [ "M", "r" ], for = "unix", run = "plugin gvfs -- remove-mount", desc = "gvfs:Remove a GVFS mount URI" },
+  { on = [ "M", "g" ], for = "unix", run = "plugin gvfs -- jump-to-device", desc = "gvfs:Select device then jump to its mount point" },
+  { on = [ "M", "`" ], for = "unix", run = "plugin gvfs -- jump-back-prev-cwd", desc = "gvfs:Jump back to the position before jumped to device" },
+  # Mount filesystem
+  { on = [ "M", "m" ], for = "unix", run = "plugin mount", desc = "Mount device" },
+  # sshfs
+  { on = [ "M", "s", "s" ], for = "unix", run = "plugin sshfs -- menu",            desc = "Open SSHFS options" },
+  { on = [ "M", "s", "m" ], for = "unix", run = "plugin sshfs -- mount --jump",    desc = "Mount & jump" },
+  { on = [ "M", "s", "u" ], for = "unix", run = "plugin sshfs -- unmount",         desc = "Unmount SSHFS" },
+  { on = [ "M", "s", "j" ], for = "unix", run = "plugin sshfs -- jump",            desc = "Jump to mount" },
+  { on = [ "M", "s", "a" ], for = "unix", run = "plugin sshfs -- add",             desc = "Add SSH host" },
+  { on = [ "M", "s", "r" ], for = "unix", run = "plugin sshfs -- remove",          desc = "Remove SSH host" },
+  { on = [ "M", "s", "h" ], for = "unix", run = "plugin sshfs -- home",            desc = "Go to mount home" },
+  { on = [ "M", "s", "c" ], for = "unix", run = "cd ~/.ssh/",                      desc = "Go to ssh config" },
+  { on = [ "g", "m", "a" ], run = "plugin yamb -- save", desc = "Add bookmark" },
+  { on = [ "g", "m", "g" ], run = "plugin yamb -- jump_by_key", desc = "Jump bookmark by key" },
+  { on = [ "g", "m", "G" ], run = "plugin yamb -- jump_by_fzf", desc = "Jump bookmark by fzf" },
+  { on = [ "g", "m", "d" ], run = "plugin yamb -- delete_by_key", desc = "Delete bookmark by key" },
+  { on = [ "g", "m", "D" ], run = "plugin yamb -- delete_by_fzf", desc = "Delete bookmark by fzf" },
+  { on = [ "g", "m", "A" ], run = "plugin yamb -- delete_all", desc = "Delete all bookmarks" },
+  { on = [ "g", "m", "r" ], run = "plugin yamb -- rename_by_key", desc = "Rename bookmark by key" },
+  { on = [ "g", "m", "R" ], run = "plugin yamb -- rename_by_fzf", desc = "Rename bookmark by fzf" },
+	# 智能进入目录或打开文件
+	{ on = [ "<Right>" ], run = "plugin smart-enter", desc = "Enter the child directory, or open the file" },
+	{ on = [ "l" ], run = "plugin smart-enter", desc = "Enter the child directory, or open the file" },
+  # For Unix systems
+  { on = [ "!" ], for = "unix", run = 'plugin open-with-cmd -- block', desc = "Open with command" },
+  # For Windows systems
+  { on = [ "!" ], for = "windows", run = 'plugin open-with-cmd -- block', desc = "Open with command" },
+  # Dragon
+  { on = [ "<C-n>" ], for = "unix", run = 'shell -- dragon -x -i -T %h', desc = "Dragon" },
+	# 预览最大化
+	{ on = [ "F","M" ], run = "plugin toggle-pane max-preview", desc = "Max preview" },
+	# 隐藏预览
+	{ on = [ "F","m" ], run = "plugin toggle-pane min-preview", desc = "Min preview" },
+
+  { on = "y", for = "unix", run = [ "shell -- echo %s | xclip -i -selection clipboard -t text/uri-list", "yank" ], desc = "" },
+  { on = "y", for = "unix", run = [ 'shell -- for path in %s; do echo "file://$path"; done | wl-copy -t text/uri-list', "yank" ], desc = "" },
+
+	{ on = [ "c","s" ], run = "plugin what-size", desc = "Calc size of selection or cwd" },
+	# 使用ouch压缩
+	{ on = [ "c","z" ], run = "plugin ouch --args=zip", desc = "Compress with ouch" },
+	# 更改文件权限chmod.yazi
+	{ on = [ "c","m" ], run = "plugin chmod", desc = "Chmod on selected files" },
+  { on = [ "c", "P" ], run = "plugin pandoc", desc = "Pandoc: Interactive Convert" },
+  { on = [ "c", "p" ], run = "plugin save-clipboard-to-file", desc = "Paste clipboard content to file and hover after created" },
+  { on = [ "c", "D" ], run = "plugin diff", desc = "Diff the selected with the hovered file" },
+	# sudo touch/mkdir
+	{ on = ["R", "c"], run = "plugin sudo -- create", desc = "sudo create a file or directory (ends with / for directories)" },
+  { on = ["R", "p", "p"], run = "plugin sudo -- paste", desc = "sudo paste" },
+  { on = ["R", "P"], run = "plugin sudo -- paste --force", desc = "sudo paste" },
+  { on = ["R", "r"], run = "plugin sudo -- rename", desc = "sudo rename" },
+  { on = ["R", "p", "l"], run = "plugin sudo -- link", desc = "sudo link" },
+  { on = ["R", "p", "r"], run = "plugin sudo -- link --relative", desc = "sudo link relative path" },
+  { on = ["R", "p", "L"], run = "plugin sudo -- hardlink", desc = "sudo hardlink" },
+  { on = ["R", "a"], run = "plugin sudo -- create", desc = "sudo create" },
+  { on = ["R", "d"], run = "plugin sudo -- remove", desc = "sudo trash" },
+  { on = ["R", "D"], run = "plugin sudo -- remove --permanently", desc = "sudo delete" },
+  { on = ["R", "m"], run = "plugin sudo -- chmod", desc = "sudo chmod" },
+	{ on = ["g", "G"], run = "shell --block --confirm 'lazygit'", desc = "lazygit" },
+]

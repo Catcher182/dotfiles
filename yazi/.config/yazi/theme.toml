@@ -1,0 +1,57 @@
+"$schema" = "https://yazi-rs.github.io/schemas/theme.json"
+
+[flavor]
+dark  = "dracula"
+light = "catppuccin-latte"
+
+[mgr]
+cwd = { fg = "#087f5b" }
+border_symbol = " "
+
+[tabs]
+sep_inner = { open = "", close = "" }
+sep_outer = { open = "", close = "" }
+active   = { fg = "#eff1f5", bg = "#087f5b", bold = true }
+inactive = { fg = "#087f5b", bg = "#ccd0da" }
+
+[mode]
+normal_main = { fg = "#eff1f5", bg = "#087f5b", bold = true }
+normal_alt  = { fg = "#087f5b", bg = "#ccd0da" }
+[indicator]
+padding = { open = "█", close = "█" }
+[status]
+overall   = {}
+sep_left  = { open = "█", close = "█" }
+sep_right = { open = "█", close = "█" }
+
+[confirm]
+border     = { fg = "#087f5b" }
+title      = { fg = "#087f5b" }
+
+[spot]
+border = { fg = "#087f5b" }
+title  = { fg = "#087f5b" }
+tbl_col  = { fg = "#087f5b" }
+
+[pick]
+border   = { fg = "#087f5b" }
+
+[input]
+border   = { fg = "#087f5b" }
+
+[cmp]
+border   = { fg = "#087f5b" }
+
+[tasks]
+border  = { fg = "#087f5b" }
+
+[filetype]
+rules = [
+	{ url = "*/", fg = "#087f5b" },
+]
+
+[icon]
+conds = [
+	{ if = "dir", text = "", fg = "#087f5b" },
+]
+

@@ -1,0 +1,109 @@
+# A TOML linter such as https://taplo.tamasfe.dev/ can use this schema to validate your config.
+# If you encounter any issues, please make an issue at https://github.com/yazi-rs/schemas.
+"$schema" = "https://yazi-rs.github.io/schemas/yazi.json"
+
+[mgr]
+ratio          = [ 1, 4, 3 ]
+sort_by        = "alphabetical"
+sort_sensitive = false
+sort_reverse 	 = false
+sort_dir_first = true
+sort_translit  = false
+linemode       = "btime"
+show_hidden    = false
+show_symlink   = true
+scrolloff      = 5
+mouse_events   = [ "click", "scroll", "touch", "move", "drag" ]
+title_format   = "Yazi: {cwd}"
+
+# 手动修改了大量打开的常用软件，orphan使用新的进程打开，block将和yazi同一个进程
+[opener]
+edit = [
+	{ run = "${EDITOR:-vi} %s", desc = "$EDITOR",      for = "unix", block = true },
+	{ run = "nvim %s",          desc = "neovim",       for = "unix", block = true },
+	{ run = "zed %s",           desc = "zed",          for = "unix", block = true },
+	{ run = 'code "$@"',        desc = "vscode",       for = "unix", block = true },
+	{ run = "nvim %s",          desc = "neovim",       for = "windows", block = true },
+	{ run = "zed %s",           desc = "zed",          for = "windows", orphan = true },
+	{ run = "code %s",          desc = "code",         for = "windows", orphan = true },
+	{ run = "code -w %s",       desc = "code (block)", for = "windows", block = true },
+]
+play = [
+	{ run = "xdg-open %s1",                desc = "Play", for = "linux" },
+	{ run = "open %s",                     desc = "Play", for = "macos" },
+	{ run = 'start "" %s1', orphan = true, desc = "Play", for = "windows" },
+	{ run = 'mpv --force-window "$@"', orphan = true, for = "unix" },
+	{ run = 'mpv --force-window %*', orphan = true, for = "windows" },
+	{ run = '''mediainfo "$1"; echo "Press enter to exit"; read _''', block = true, desc = "Show media info", for = "unix" },
+	{ run = "mediainfo %s1; echo 'Press enter to exit'; read _", block = true, desc = "Show media info", for = "unix" },
+	{ run = "mediainfo %s1 & pause", block = true, desc = "Show media info", for = "windows" },
+]
+open = [
+	{ run = "xdg-open %s1",    desc = "Open", for = "linux" },
+	{ run = "open %s",         desc = "Open", for = "macos" },
+	{ run = 'start "" %s1',    desc = "Open", for = "windows", orphan = true },
+	{ run = 'imv "$@"',                     desc = "Open with imv", for = "linux" },
+	{ run = 'display "$@"',                 desc = "Open with ImageMagick", for = "linux" },
+	{ run = 'mpv "$@"',                     desc = "Open with mpv", for = "linux" },
+]
+reveal = [
+	{ run = "xdg-open %d1",         desc = "Reveal", for = "linux" },
+	{ run = "open -R %s1",          desc = "Reveal", for = "macos" },
+	{ run = "explorer /select,%s1", desc = "Reveal", for = "windows", orphan = true },
+	{ run = "clear; exiftool %s1; echo 'Press enter to exit'; read _", desc = "Show EXIF", for = "unix", block = true },
+]
+extract = [
+	{ run = 'ouch decompress "$1"', desc = "Extract here(ouch)", for = "unix" },
+	{ run = '7z x "$1"', desc = "Extract here(7z)", for = "unix" },
+	{ run = 'ya pub extract --list "$@"', desc = "Extract here", for = "unix" },
+	{ run = "ya pub extract --list %s", desc = "Extract here" },
+]
+download = [
+	{ run = "ya emit download --open %S", desc = "Download and open" },
+	{ run = "ya emit download %S",        desc = "Download" },
+]
+document = [
+	{ run = "xdg-open %s1",    desc = "Open", for = "linux" },
+	{ run = "open %s",         desc = "Open", for = "macos" },
+	{ run = 'start "" %s1',    desc = "Open", for = "windows", orphan = true },
+	{ run = 'wps "$@"',        orphan = true,  for = "unix" },
+	{ run = 'zathura "$@"',    orphan = true,  for = "unix" },
+]
+executable = [
+	{ run = '"$@"', orphan = true,  for = "unix" },
+	{ run = 'sh "$@"', orphan = true,  for = "unix" },
+]
+
+[open]
+# 手动修改打开有问题的文件类型可以根据后缀名指定软件，有的时候要/后缀名才生效
+prepend_rules = [
+	{ url = "*.dart",  use = [ "edit", "reveal" ] },
+	{ mime = "*/sql",  use = [ "edit", "reveal" ] },
+	{ url = "*.rar",  use = [ "extract", "reveal" ] },
+	{ mime = "*/pdf",  use = [ "document", "reveal" ] },
+	{ mime = "*/doc",  use = [ "document", "reveal" ] },
+	{ url = "*.xls",  use = [ "document", "reveal" ] },
+	{ url = "*.{AppImage,appimage}",  use = [ "executable", "reveal" ] },
+]
+
+# git状态插件必备的配置
+[[plugin.prepend_fetchers]]
+id   = "git"
+url = "*"
+run  = "git"
+
+[[plugin.prepend_fetchers]]
+id   = "git"
+url = "*/"
+run  = "git"
+
+[plugin]
+# 手动定义预览
+prepend_previewers = [
+    { mime = "{audio,video,image}/*", run = "mediainfo"},
+    { mime = "application/subrip", run = "mediainfo" },
+    { mime = "application/postscript", run = "mediainfo" },
+    { url = "*/", run = "folder" },
+    { url = "/run/user/1000/gvfs/**/*", run = "noop" },
+    { url = "/run/media/USER_NAME/**/*", run = "noop" },
+]

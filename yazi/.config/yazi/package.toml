@@ -1,0 +1,89 @@
+[[plugin.deps]]
+use = "TD-Sky/sudo"
+rev = "86205aa"
+hash = "52ae373c1d210641a8019afefcf287a3"
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:chmod"
+rev = "d078b01"
+hash = "a285fecddd072a4688417a66aefb646"
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:diff"
+rev = "d078b01"
+hash = "ee1b7ea63ee549447fb038d157ecdfd0"
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:git"
+rev = "d078b01"
+hash = "b78ede903eab5ea23f10d1c3372b863e"
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:smart-enter"
+rev = "d078b01"
+hash = "c3f5c63722344045822f121efe2d2553"
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:mount"
+rev = "d078b01"
+hash = "f87152cf4fce59a964bc2974626187ae"
+
+[[plugin.deps]]
+use = "ndtoan96/ouch"
+rev = "594b8a2"
+hash = "5a427ce6b5b26c2f51d649c88daad5f4"
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:toggle-pane"
+rev = "d078b01"
+hash = "e24c3fe3f4e8eadb66f9cd41da6c9e58"
+
+[[plugin.deps]]
+use = "boydaihungst/mediainfo"
+rev = "dc61636"
+hash = "674993c82b3f10289f2fa62501864c91"
+
+[[plugin.deps]]
+use = "Ape/open-with-cmd"
+rev = "e3d430f"
+hash = "61ba098e525aaa12140c43c0fda9f223"
+
+[[plugin.deps]]
+use = "boydaihungst/gvfs"
+rev = "30440c7"
+hash = "50b85a1fd56f1461d66a80d549e97830"
+
+[[plugin.deps]]
+use = "h-hg/yamb"
+rev = "5f2e22e"
+hash = "699fe07e0d2d1b4af8dafb84168eeb04"
+
+[[plugin.deps]]
+use = "pirafrank/what-size"
+rev = "179ebf6"
+hash = "38c0d8cdd02e7e52655e168dc07cd87"
+
+[[plugin.deps]]
+use = "lmnek/pandoc"
+rev = "fd2798b"
+hash = "51156e681fc0dec73fac968b38171e2f"
+
+[[plugin.deps]]
+use = "boydaihungst/save-clipboard-to-file"
+rev = "9fcd6c4"
+hash = "d75752815293b58dbcf007b19614353"
+
+[[plugin.deps]]
+use = "uhs-robert/sshfs"
+rev = "5edff3b"
+hash = "e92138f6eb884bef96d92b2d114ac927"
+
+[[flavor.deps]]
+use = "yazi-rs/flavors:catppuccin-latte"
+rev = "ac51f0f"
+hash = "66877e0246705e456f41ed89c22e7752"
+
+[[flavor.deps]]
+use = "yazi-rs/flavors:dracula"
+rev = "ac51f0f"
+hash = "5e43bc2b204087791e9e2f1378b75f77"
