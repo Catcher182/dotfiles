@@ -49,6 +49,8 @@ prepend_keymap = [
   { on = [ "!" ], for = "windows", run = 'plugin open-with-cmd -- block', desc = "Open with command" },
   # Dragon
   { on = [ "<C-n>" ], for = "unix", run = 'shell -- dragon -x -i -T %h', desc = "Dragon" },
+  # Smart-paste
+  { on = [ "<C-p>" ], run = 'plugin smart-paste', desc = "Paste into the hovered directory or CWD" },
 	# 预览最大化
 	{ on = [ "F","M" ], run = "plugin toggle-pane max-preview", desc = "Max preview" },
 	# 隐藏预览
@@ -65,6 +67,8 @@ prepend_keymap = [
   { on = [ "c", "P" ], run = "plugin pandoc", desc = "Pandoc: Interactive Convert" },
   { on = [ "c", "p" ], run = "plugin save-clipboard-to-file", desc = "Paste clipboard content to file and hover after created" },
   { on = [ "c", "D" ], run = "plugin diff", desc = "Diff the selected with the hovered file" },
+  # Recycle
+  { on = ["R","b"], run = "plugin recycle-bin", desc = "Open Recycle Bin menu" },
 	# sudo touch/mkdir
 	{ on = ["R", "c"], run = "plugin sudo -- create", desc = "sudo create a file or directory (ends with / for directories)" },
   { on = ["R", "p", "p"], run = "plugin sudo -- paste", desc = "sudo paste" },

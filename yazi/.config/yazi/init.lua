@@ -9,6 +9,8 @@ require("smart-enter"):setup({
   open_multi = true,
 })
 
+require("recycle-bin"):setup()
+
 Status:children_add(function(self)
   local h = self._current.hovered
   if h and h.link_to then

@@ -78,6 +78,16 @@ use = "uhs-robert/sshfs"
 rev = "5edff3b"
 hash = "e92138f6eb884bef96d92b2d114ac927"
 
+[[plugin.deps]]
+use = "yazi-rs/plugins:smart-paste"
+rev = "d078b01"
+hash = "75fd60b2df7115e0a6ca31a6a804d320"
+
+[[plugin.deps]]
+use = "uhs-robert/recycle-bin"
+rev = "fa68711"
+hash = "8714306b5cac6359edbacbf545fbd691"
+
 [[flavor.deps]]
 use = "yazi-rs/flavors:catppuccin-latte"
 rev = "ac51f0f"
