@@ -45,8 +45,10 @@ prepend_keymap = [
 	{ on = [ "l" ], run = "plugin smart-enter", desc = "Enter the child directory, or open the file" },
   # For Unix systems
   { on = [ "!" ], for = "unix", run = 'plugin open-with-cmd -- block', desc = "Open with command" },
+  { on = [ "`" ], for = "unix", run = 'shell "$SHELL" --block', desc = "Open $SHELL here" },
   # For Windows systems
   { on = [ "!" ], for = "windows", run = 'plugin open-with-cmd -- block', desc = "Open with command" },
+  { on = [ "`" ], for = "windows", run = 'shell "powershell.exe" --block', desc = "Open PowerShell here" },
   # Dragon
   { on = [ "<C-n>" ], for = "unix", run = 'shell -- dragon -x -i -T %h', desc = "Dragon" },
   # Smart-paste
