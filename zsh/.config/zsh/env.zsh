@@ -19,7 +19,6 @@ export OPENAI_API_KEY="$(cat ~/.config/.gp-nvim)"
 # &   # Run the process in the background.
 # ( ) # Hide shell job control messages.
 # Not supported in the "fish" shell.
-(cat ~/.cache/wal/sequences &)
 
 # Alternative (blocks terminal for 0-3ms)
 # cat ~/.cache/wal/sequences

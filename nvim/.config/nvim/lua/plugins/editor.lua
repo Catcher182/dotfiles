@@ -179,19 +179,6 @@ return {
     end,
   },
   {
-    "stevearc/overseer.nvim",
-    opts = {
-      templates = { "builtin", "user.cpp_build", "user.run_script" },
-      -- strategy = "toggleterm",
-      strategy = {
-        "toggleterm",
-        direction = "horizontal",
-        autos_croll = true,
-        quit_on_exit = "success",
-      },
-    },
-  },
-  {
     "sindrets/winshift.nvim",
     event = "VeryLazy",
     opts = {
@@ -320,23 +307,6 @@ return {
     },
   },
   {
-    "smoka7/multicursors.nvim",
-    event = "VeryLazy",
-    dependencies = {
-      "nvimtools/hydra.nvim",
-    },
-    opts = {},
-    cmd = { "MCstart", "MCvisual", "MCclear", "MCpattern", "MCvisualPattern", "MCunderCursor" },
-    keys = {
-      {
-        mode = { "v", "n" },
-        "<Leader>m",
-        "<cmd>MCstart<cr>",
-        desc = "Create a selection for selected text or word under the cursor",
-      },
-    },
-  },
-  {
     "johmsalas/text-case.nvim",
     dependencies = { "nvim-telescope/telescope.nvim" },
     config = function()
@@ -357,7 +327,7 @@ return {
     },
   },
   {
-    "echasnovski/mini.align",
+    "nvim-mini/mini.align",
     version = false,
     event = "VeryLazy",
     opts = {
@@ -368,7 +338,7 @@ return {
     },
   },
   {
-    "echasnovski/mini.operators",
+    "nvim-mini/mini.operators",
     version = false,
     event = "VeryLazy",
     opts = {

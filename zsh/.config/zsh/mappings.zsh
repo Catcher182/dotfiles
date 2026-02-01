@@ -44,12 +44,6 @@ function fman() {
 }
 
 
-LFCD="/home/dawn/.config/lf/lfcd.sh"                                #  pre-built binary, make sure to use absolute path
-if [ -f "$LFCD" ]; then
-    source "$LFCD"
-fi
-
-
 set-wallpaper ()
 {
   ~/.config/rofi/scripts/set-wallpaper.sh "$1"
@@ -209,4 +203,11 @@ pcolorto() {
       fi
     fi
   fi
+}
+function y() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+	command yazi "$@" --cwd-file="$tmp"
+	IFS= read -r -d '' cwd < "$tmp"
+	[ "$cwd" != "$PWD" ] && [ -d "$cwd" ] && builtin cd -- "$cwd"
+	rm -f -- "$tmp"
 }
